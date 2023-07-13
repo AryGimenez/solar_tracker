@@ -9,7 +9,7 @@ int val_Horizonal=90;       // variable to read the value from the analog pin
 
 //===============================================================================
 const int referenceVolts = 5;
-const float R1 = 51000.0; //Resistor #1 (51K)
+const float R1 = 51000.0; //Resistor #1 (51K) <?>
 const float R2 = 100000.0; //Resistor #2 (100K)
 const float Ratio = (R1/R2);
 const float resistorFactor = ((referenceVolts/Ratio)/1023.0);  // eq 0.014471088
@@ -17,17 +17,35 @@ const float resistorFactor = ((referenceVolts/Ratio)/1023.0);  // eq 0.014471088
 const int TolarencePin = A4; // Use Potentiometer for Tolarence Settings 
 const int solarPin = A5;     // +V from Solar Panel connected to analog pin 
 float v = 0;
-//
+
+
+
+
+
+
+
+
+
+//  LED del Sensor de Seguimiento Solar -  LED lights of the Solar Tracking Sensor
+
 const int LDR_1_Left = A0;        // LDR connected to Analog Pin 0 Left
 const int LDR_2_Right = A1;       // LDR connected to Analog Pin 1 Right
 const int LDR_3_Down = A2;        // LDR connected to Analog Pin 2 Down
 const int LDR_4_Up = A3;          // LDR connected to Analog Pin 3 Up
+
+
+
+
+
+
 //
 int LDR_1_Left_val = 0;
 int LDR_2_Right_val = 0;
 int LDR_4_Up_val = 0;
 int LDR_3_Down_val = 0;
 //
+
+// Led que indicadores Aun no se vie que hasen supongo que indica Led LDR_1_Left
 //LEDs 10=UP; 11=Right; 12=Left; 13=Down
 int ledPins[] = {10,11,12,13};
 // 
