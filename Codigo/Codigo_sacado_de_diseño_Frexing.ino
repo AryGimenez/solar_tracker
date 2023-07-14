@@ -1,6 +1,9 @@
 
 
 #include <Servo.h> 
+#include <Time.h>
+
+
  
 Servo servo_Vertical;      // create servo object to control a servo (Vertical)
 Servo servo_Horizonal;  // create servo object to control a servo (Horizontal)
@@ -23,7 +26,7 @@ float v = 0;
 
 
 
-
+z<
 
 
 //  LED del Sensor de Seguimiento Solar -  LED lights of the Solar Tracking Sensor
@@ -104,7 +107,7 @@ void read_LDRs(){
 // Set the LDRs in an x config and label the LDRs from 1-4 
 //    \ 4 /
 //    1 X 2
-//    / 3 \
+//    / 3 \1
 ///arduino LDR Pins 10=UP; 11=Right; 12=Left; 13=Down 
  LDR_1_Left_val = analogRead(LDR_1_Left);
  LDR_2_Right_val = analogRead(LDR_2_Right);
