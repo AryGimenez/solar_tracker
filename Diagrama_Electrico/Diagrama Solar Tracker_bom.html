@@ -1,0 +1,376 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Fritzing Bill of Materials</title>
+<style type="text/css">
+.meta {
+	font-size: small;
+	margin: 0.4em 0;
+}
+table {
+	border-collapse: collapse;
+}
+th {
+	font-weight: bold;
+	text-align: left;
+	border-bottom: 1px solid black;
+	padding: 0.1em 1.5em 0.2em 0.1em;
+}
+td {
+	border-bottom: 1px solid #CCC;
+	padding: 0.5em 1.5em 0.5em 0.1em;
+}
+.props {
+	font-size: smaller;
+}
+</style>
+</head>
+
+<body>
+<h1>Bill of Materials: Diagrama Solar Tracker.fzz</h1>
+<p class="meta">/home/ary/Documentos/Product Join/solar_tracker/Diagrama_Electrico/Diagrama Solar Tracker.fzz</p>
+<p class="meta">Friday, July 14 2023, 09:03:00</p>
+
+<h2>Assembly List</h2>
+<table>
+
+  <thead>
+   <tr>
+    <th>Label</th>
+    <th>MN (manufacturer number)</th>
+    <th>MPN (manufacturer part number)</th>
+    <th>Part Type</th>
+    <th>Properties</th>
+    </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>C1</td>
+    <td></td>
+    <td></td>
+    <td>Electrolytic Capacitor</td>
+    <td class="props">capacitancia 1µF; tensión 35V; encapsulado 100 mil [THT, electrolytic]</td>
+</tr>
+<tr>
+    <td>Foto Celda</td>
+    <td></td>
+    <td></td>
+    <td>Solar Pannel</td>
+    <td class="props">variante variant 1; código de componente FotoSelda</td>
+</tr>
+<tr>
+    <td>LDR_1_Left PIN A0</td>
+    <td></td>
+    <td></td>
+    <td>Photocell (LDR)</td>
+    <td class="props">dark resistance @0.01lx 300kΩ; potencia 0.25W; light resistance @100lx 400Ω; luminance 10lx; encapsulado THT</td>
+</tr>
+<tr>
+    <td>LDR_2_Right PIN A1</td>
+    <td></td>
+    <td></td>
+    <td>Photocell (LDR)</td>
+    <td class="props">dark resistance @0.01lx 300kΩ; potencia 0.25W; light resistance @100lx 400Ω; luminance 10lx; encapsulado THT</td>
+</tr>
+<tr>
+    <td>LDR_3_Down PIN A2</td>
+    <td></td>
+    <td></td>
+    <td>Photocell (LDR)</td>
+    <td class="props">dark resistance @0.01lx 300kΩ; potencia 0.25W; light resistance @100lx 400Ω; luminance 10lx; encapsulado THT</td>
+</tr>
+<tr>
+    <td>LDR_4_UP PIN A3</td>
+    <td></td>
+    <td></td>
+    <td>Photocell (LDR)</td>
+    <td class="props">dark resistance @0.01lx 300kΩ; potencia 0.25W; light resistance @100lx 400Ω; luminance 10lx; encapsulado THT</td>
+</tr>
+<tr>
+    <td>LED PIN 10 (UP)</td>
+    <td></td>
+    <td></td>
+    <td>Blue (525nm) LED</td>
+    <td class="props">color Blue (525nm); corriente 0.030A; leg yes; encapsulado 5 mm [THT]; código de componente Led_BTN_Automatico</td>
+</tr>
+<tr>
+    <td>LED PIN 11 (Right)</td>
+    <td></td>
+    <td></td>
+    <td>Blue (505nm) LED</td>
+    <td class="props">color Blue (505nm); corriente 0.030A; leg yes; encapsulado 5 mm [THT]</td>
+</tr>
+<tr>
+    <td>LED PIN 12 (Left)</td>
+    <td></td>
+    <td></td>
+    <td>Blue (505nm) LED</td>
+    <td class="props">color Blue (505nm); corriente 0.030A; leg yes; encapsulado 5 mm [THT]</td>
+</tr>
+<tr>
+    <td>LED PIN 13 (Down)</td>
+    <td></td>
+    <td></td>
+    <td>Red (633nm) LED</td>
+    <td class="props">color Red (633nm); corriente 0.030A; leg yes; encapsulado 5 mm [THT]</td>
+</tr>
+<tr>
+    <td>Pantalla OLED I2C1</td>
+    <td></td>
+    <td></td>
+    <td>OLED 128x64 I2C Monochrome Display</td>
+    <td class="props">variante variant 2</td>
+</tr>
+<tr>
+    <td>Pla Cprincipal</td>
+    <td></td>
+    <td></td>
+    <td>Arduino Mega 2560 (Rev3)</td>
+    <td class="props">tipo Arduino MEGA 2560 (Rev3)</td>
+</tr>
+<tr>
+    <td>R1</td>
+    <td></td>
+    <td></td>
+    <td>51Ω Resistor</td>
+    <td class="props">Resistencia 51Ω; tolerancia ±5%; potencia 0.25W; espaciado entre pines 400 mil; bands 4; encapsulado THT</td>
+</tr>
+<tr>
+    <td>R2</td>
+    <td></td>
+    <td></td>
+    <td>100Ω Resistor</td>
+    <td class="props">Resistencia 100Ω; tolerancia ±5%; potencia 0.25W; espaciado entre pines 400 mil; bands 4; encapsulado THT</td>
+</tr>
+<tr>
+    <td>R3</td>
+    <td></td>
+    <td></td>
+    <td>220Ω Resistor</td>
+    <td class="props">Resistencia 220Ω; tolerancia ±5%; potencia 0.25W; espaciado entre pines 400 mil; bands 4; encapsulado THT</td>
+</tr>
+<tr>
+    <td>R4</td>
+    <td></td>
+    <td></td>
+    <td>220Ω Resistor</td>
+    <td class="props">Resistencia 220Ω; tolerancia ±5%; potencia 0.25W; espaciado entre pines 400 mil; bands 4; encapsulado THT</td>
+</tr>
+<tr>
+    <td>R5</td>
+    <td></td>
+    <td></td>
+    <td>220Ω Resistor</td>
+    <td class="props">Resistencia 220Ω; tolerancia ±5%; potencia 0.25W; espaciado entre pines 400 mil; bands 4; encapsulado THT</td>
+</tr>
+<tr>
+    <td>R6</td>
+    <td></td>
+    <td></td>
+    <td>220Ω Resistor</td>
+    <td class="props">Resistencia 220Ω; tolerancia ±5%; potencia 0.25W; espaciado entre pines 400 mil; bands 4; encapsulado THT</td>
+</tr>
+<tr>
+    <td>R8</td>
+    <td></td>
+    <td></td>
+    <td>Rotary Potentiometer (Small)</td>
+    <td class="props">resistencia máxima 10kΩ; knob status 50%; tamaño Rotary - 9mm; potencia 0.5W; track Linear; tipo Rotary Shaft Potentiometer; encapsulado THT</td>
+</tr>
+<tr>
+    <td>R9</td>
+    <td></td>
+    <td></td>
+    <td>220Ω Resistor</td>
+    <td class="props">Resistencia 220Ω; tolerancia ±5%; potencia 0.25W; espaciado entre pines 400 mil; bands 4; encapsulado THT</td>
+</tr>
+<tr>
+    <td>R10</td>
+    <td></td>
+    <td></td>
+    <td>220Ω Resistor</td>
+    <td class="props">Resistencia 220Ω; tolerancia ±5%; potencia 0.25W; espaciado entre pines 400 mil; bands 4; encapsulado THT</td>
+</tr>
+<tr>
+    <td>R11</td>
+    <td></td>
+    <td></td>
+    <td>220Ω Resistor</td>
+    <td class="props">Resistencia 220Ω; tolerancia ±5%; potencia 0.25W; espaciado entre pines 400 mil; bands 4; encapsulado THT</td>
+</tr>
+<tr>
+    <td>R12</td>
+    <td></td>
+    <td></td>
+    <td>220Ω Resistor</td>
+    <td class="props">Resistencia 220Ω; tolerancia ±5%; potencia 0.25W; espaciado entre pines 400 mil; bands 4; encapsulado THT</td>
+</tr>
+<tr>
+    <td>Reloj Tiny RTC1</td>
+    <td></td>
+    <td></td>
+    <td>Tiny RTC</td>
+    <td class="props">variante variant 1</td>
+</tr>
+<tr>
+    <td>SD Card</td>
+    <td></td>
+    <td></td>
+    <td>SD Card Module</td>
+    <td class="props">variante 133709</td>
+</tr>
+<tr>
+    <td>Sensor</td>
+    <td></td>
+    <td></td>
+    <td>ACS712 Current Sensor 5A 20A 30A</td>
+    <td class="props">variante variant 2</td>
+</tr>
+<tr>
+    <td>Servo_Horizonal</td>
+    <td></td>
+    <td></td>
+    <td>Basic Servo</td>
+    <td class="props">código de componente HiTec HS-422</td>
+</tr>
+<tr>
+    <td>Servo_Vertical</td>
+    <td></td>
+    <td></td>
+    <td>Basic Servo</td>
+    <td class="props">código de componente HiTec HS-422</td>
+</tr>
+
+  </tbody>
+</table>
+<h2>Shopping List</h2>
+<table>
+  <thead>
+	<tr>
+    <th>Amount</th>
+    <th>MN (manufacturer number)</th>
+    <th>MPN (manufacturer part number)</th>
+    <th>Part Type</th>
+    <th>Properties</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>1</td>
+    <td></td>
+    <td></td>
+    <td>Electrolytic Capacitor</td>
+    <td class="props">capacitancia 1µF; tensión 35V; encapsulado 100 mil [THT, electrolytic]</td>
+</tr>
+<tr>
+    <td>1</td>
+    <td></td>
+    <td></td>
+    <td>Solar Pannel</td>
+    <td class="props">variante variant 1; código de componente FotoSelda</td>
+</tr>
+<tr>
+    <td>4</td>
+    <td></td>
+    <td></td>
+    <td>Photocell (LDR)</td>
+    <td class="props">dark resistance @0.01lx 300kΩ; potencia 0.25W; light resistance @100lx 400Ω; luminance 10lx; encapsulado THT</td>
+</tr>
+<tr>
+    <td>1</td>
+    <td></td>
+    <td></td>
+    <td>Blue (525nm) LED</td>
+    <td class="props">color Blue (525nm); corriente 0.030A; leg yes; encapsulado 5 mm [THT]; código de componente Led_BTN_Automatico</td>
+</tr>
+<tr>
+    <td>2</td>
+    <td></td>
+    <td></td>
+    <td>Blue (505nm) LED</td>
+    <td class="props">color Blue (505nm); corriente 0.030A; leg yes; encapsulado 5 mm [THT]</td>
+</tr>
+<tr>
+    <td>1</td>
+    <td></td>
+    <td></td>
+    <td>Red (633nm) LED</td>
+    <td class="props">color Red (633nm); corriente 0.030A; leg yes; encapsulado 5 mm [THT]</td>
+</tr>
+<tr>
+    <td>1</td>
+    <td></td>
+    <td></td>
+    <td>OLED 128x64 I2C Monochrome Display</td>
+    <td class="props">variante variant 2</td>
+</tr>
+<tr>
+    <td>1</td>
+    <td></td>
+    <td></td>
+    <td>Arduino Mega 2560 (Rev3)</td>
+    <td class="props">tipo Arduino MEGA 2560 (Rev3)</td>
+</tr>
+<tr>
+    <td>1</td>
+    <td></td>
+    <td></td>
+    <td>51Ω Resistor</td>
+    <td class="props">Resistencia 51Ω; tolerancia ±5%; potencia 0.25W; espaciado entre pines 400 mil; bands 4; encapsulado THT</td>
+</tr>
+<tr>
+    <td>1</td>
+    <td></td>
+    <td></td>
+    <td>100Ω Resistor</td>
+    <td class="props">Resistencia 100Ω; tolerancia ±5%; potencia 0.25W; espaciado entre pines 400 mil; bands 4; encapsulado THT</td>
+</tr>
+<tr>
+    <td>8</td>
+    <td></td>
+    <td></td>
+    <td>220Ω Resistor</td>
+    <td class="props">Resistencia 220Ω; tolerancia ±5%; potencia 0.25W; espaciado entre pines 400 mil; bands 4; encapsulado THT</td>
+</tr>
+<tr>
+    <td>1</td>
+    <td></td>
+    <td></td>
+    <td>Rotary Potentiometer (Small)</td>
+    <td class="props">resistencia máxima 10kΩ; knob status 50%; tamaño Rotary - 9mm; potencia 0.5W; track Linear; tipo Rotary Shaft Potentiometer; encapsulado THT</td>
+</tr>
+<tr>
+    <td>1</td>
+    <td></td>
+    <td></td>
+    <td>Tiny RTC</td>
+    <td class="props">variante variant 1</td>
+</tr>
+<tr>
+    <td>1</td>
+    <td></td>
+    <td></td>
+    <td>SD Card Module</td>
+    <td class="props">variante 133709</td>
+</tr>
+<tr>
+    <td>1</td>
+    <td></td>
+    <td></td>
+    <td>ACS712 Current Sensor 5A 20A 30A</td>
+    <td class="props">variante variant 2</td>
+</tr>
+<tr>
+    <td>2</td>
+    <td></td>
+    <td></td>
+    <td>Basic Servo</td>
+    <td class="props">código de componente HiTec HS-422</td>
+</tr>
+
+  </tbody>
+</table>
+<p class="meta"><br/>Exported with Fritzing 1.0.0- http://fritzing.org</p>
+</body>
+</html>
