@@ -1,7 +1,8 @@
+#include <Servo.h> // Mover los Servo
+#include <Time.h> // Modulo Reloj
+#include <SPI.h> // Bus de Comunicacion SPI
+#include <SD.h> //Tarjeta SD
 
-
-#include <Servo.h> 
-#include <Time.h>
 
 
  
@@ -23,10 +24,9 @@ float v = 0;
 
 
 
+// Archivo donde se va a guardar el Senso
 
-
-
-z<
+File myFile;
 
 
 //  LED del Sensor de Seguimiento Solar -  LED lights of the Solar Tracking Sensor
