@@ -4,7 +4,7 @@
 #include <SD.h> //Tarjeta SD
 
 
-
+ <
  
 Servo servo_Vertical;      // create servo object to control a servo (Vertical)
 Servo servo_Horizonal;  // create servo object to control a servo (Horizontal)
@@ -19,7 +19,7 @@ const float Ratio = (R1/R2);
 const float resistorFactor = ((referenceVolts/Ratio)/1023.0);  // eq 0.014471088
 
 const int TolarencePin = A4; // Use Potentiometer for Tolarence Settings 
-const int solarPin = A5;     // +V from Solar Panel connected to analog pin 
+const int solarPin = A5;  // +V from Solar Panel connected to analog pin 
 float v = 0;
 
 
@@ -30,7 +30,6 @@ File myFile;
 
 
 //  LED del Sensor de Seguimiento Solar -  LED lights of the Solar Tracking Sensor
-
 const int LDR_1_Left = A0;        // LDR connected to Analog Pin 0 Left
 const int LDR_2_Right = A1;       // LDR connected to Analog Pin 1 Right
 const int LDR_3_Down = A2;        // LDR connected to Analog Pin 2 Down
@@ -38,10 +37,7 @@ const int LDR_4_Up = A3;          // LDR connected to Analog Pin 3 Up
 
 
 
-
-
-
-//
+//  LDR 
 int LDR_1_Left_val = 0;
 int LDR_2_Right_val = 0;
 int LDR_4_Up_val = 0;
@@ -79,35 +75,35 @@ void loop()
   delay(dtime);                           // waits for the servo to move 
 } 
 
-//=========================================================================
+// =========================================================================
 
-// Subs....
+// Subs ....
 
 
-//=========================================================================
+// =========================================================================
 void reset_leds(){
  for (int x = 0; x < 4; x++){
         digitalWrite(ledPins[x], LOW); 
  }
 }
-//=========================================================================
+// =========================================================================
 void read_potentiometer(){
 // Use Potentiometer for Tolarence Settings  
   Tolarence = analogRead(TolarencePin)/4;
 }
 
-//=========================================================================
+// =========================================================================
 void read_voltage(){
  v = analogRead(solarPin); 
  v *= resistorFactor;
 } // end read_voltage
 
-//=========================================================================
+// =========================================================================
 void read_LDRs(){
 // Set the LDRs in an x config and label the LDRs from 1-4 
-//    \ 4 /
-//    1 X 2
-//    / 3 \1
+//     \4/
+//     1X2
+//     /3\1
 ///arduino LDR Pins 10=UP; 11=Right; 12=Left; 13=Down 
  LDR_1_Left_val = analogRead(LDR_1_Left);
  LDR_2_Right_val = analogRead(LDR_2_Right);
@@ -115,7 +111,7 @@ void read_LDRs(){
  LDR_4_Up_val = analogRead(LDR_4_Up); 
 } //end read_LDRs
 
-//=========================================================================
+// =========================================================================
 void adjust_Servos(){
  
 int avg_Left_Top =     (LDR_1_Left_val +  LDR_4_Up_val) / 2;        // average value Left_Top
@@ -126,8 +122,8 @@ int avg_Right_Botton = (LDR_2_Right_val + LDR_3_Down_val) / 2;      // average v
 int dvert = (avg_Left_Top + avg_Right_Top) - (avg_Left_Botton + avg_Right_Botton); // check the diffirence of up and down
 int dhoriz = (avg_Left_Top + avg_Left_Botton) - (avg_Right_Top + avg_Right_Botton);// check the diffirence og left and rigt
 
-// Using the tolarence value stop servo seeking
-// Check Vertical
+   // Using the tolarence value stop servo seeking
+   // Check Vertical
    if (-1*Tolarence > dvert || dvert > Tolarence){ // check if the diffirence is in the tolerance else change vertical angle
       if ((avg_Left_Top + avg_Right_Top) > (avg_Left_Botton + avg_Right_Botton)){
          //adjust Vertical Servo Down
@@ -147,7 +143,8 @@ int dhoriz = (avg_Left_Top + avg_Left_Botton) - (avg_Right_Top + avg_Right_Botto
       }
       servo_Vertical.write(val_Vertical);
    }
-//Check Horizonal
+   
+   //Check Horizonal
    if (-1*Tolarence > dhoriz || dhoriz > Tolarence){ // check if the diffirence is in the tolerance else change horizontal angle
       if ((avg_Left_Top + avg_Left_Botton) > (avg_Right_Top + avg_Right_Botton)){
          //adjust Horizonal Servo Left
