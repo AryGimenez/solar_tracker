@@ -6,6 +6,9 @@
 #include <SD.h>
 #include <SPI.h>
 #include <SoftwareSerial.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+#include <ArduinoJson.h>
 
 // Definición de los pines de los servos
 const int SERVO_VERTICAL_PIN = 7;
@@ -26,6 +29,7 @@ const int BTN_MODO_AUTOMATICO_PIN = 2;
 const int LED_MODO_MANUAL_PIN = 12;
 const int LED_SOLO_MOTOR_HORIZONTAL_PIN = 11;
 const int LED_AUTOMATICO_PIN = 10;
+const int LED_SD_ESTADO_PIN = 13;
 
 // Definición de los pines para el módulo de reloj Tiny RTC
 const int RTC_SDA_PIN = 20;
@@ -37,9 +41,8 @@ const int ACS712_PIN = A4;
 // Definición de los pines para el módulo microSD Card
 const int SD_CS_PIN = 53;
 
-// Definición de los pines para el módulo Bluetooth HM-05
-const int BT_TX_PIN = 8;
-const int BT_RX_PIN = 9;
+// Definición del pin para el nivel de batería
+const int NIVEL_BATERIA_PIN = A5;
 
 // Rangos para calibrar los valores de las fotorresistencias
 const int LDR_MIN = 0;
@@ -66,7 +69,12 @@ const float ACS712_SENSITIVITY = 0.185; // Sensibilidad del sensor ACS712 en mV/
 File dataFile;
 
 // Crear objeto para la comunicación Bluetooth
-SoftwareSerial BTSerial(BT_TX_PIN, BT_RX_PIN);
+SoftwareSerial BTSerial(8, 9); // RX, TX
+
+// Crear objeto para el display OLED SSD1306
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 
 // Variables para almacenar los modos de funcionamiento
 bool modoManual = false;
@@ -77,6 +85,10 @@ bool modoAutomatico = false;
 String mLugarFisico = "Lugar Fisico";
 unsigned long mIntervaloSensado = 10; // Intervalo de sensado en minutos (por defecto 10 minutos)
 unsigned long previousMillis = 0; // Variable para almacenar el tiempo anterior en milisegundos
+bool mEstadoSD = true; // Estado de la tarjeta SD (true = Funciona, false = No funciona)
+
+// Variable para almacenar el nivel de batería
+float mNivelBateria = 0.0;
 
 void setup() {
   // Inicialización de los pines de los servos
@@ -92,6 +104,7 @@ void setup() {
   pinMode(LED_MODO_MANUAL_PIN, OUTPUT);
   pinMode(LED_SOLO_MOTOR_HORIZONTAL_PIN, OUTPUT);
   pinMode(LED_AUTOMATICO_PIN, OUTPUT);
+  pinMode(LED_SD_ESTADO_PIN, OUTPUT);
 
   // Inicialización del módulo de reloj Tiny RTC
   Wire.begin(RTC_SDA_PIN, RTC_SCL_PIN);
@@ -103,11 +116,30 @@ void setup() {
   // Inicialización del módulo microSD Card
   if (!SD.begin(SD_CS_PIN)) {
     Serial.println("Error al inicializar la tarjeta microSD");
-    while (1);
+    mEstadoSD = false;
   }
 
   // Inicialización de la comunicación Bluetooth
   BTSerial.begin(9600);
+
+  // Inicialización del display OLED SSD1306
+  if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+    Serial.println("Error al iniciar el display OLED SSD1306");
+  }
+
+  // Limpiar el display
+  display.clearDisplay();
+
+  // Mostrar el mensaje de inicio en el display
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(0, 0);
+  display.println("Solar Tracker");
+  display.display();
+  delay(2000);
+
+  // Leer el nivel de batería
+  mNivelBateria = map(analogRead(NIVEL_BATERIA_PIN), 0, 1023, 0, 100);
 }
 
 void loop() {
@@ -135,6 +167,7 @@ void loop() {
   digitalWrite(LED_MODO_MANUAL_PIN, modoManual);
   digitalWrite(LED_SOLO_MOTOR_HORIZONTAL_PIN, modoSoloMotorHorizontal);
   digitalWrite(LED_AUTOMATICO_PIN, modoAutomatico);
+  digitalWrite(LED_SD_ESTADO_PIN, mEstadoSD);
 
   // Verificar los modos de funcionamiento y realizar el seguimiento del sol correspondiente
   if (modoManual) {
@@ -174,23 +207,54 @@ void loop() {
   if (currentMillis - previousMillis >= mIntervaloSensado * 60000) {
     dataFile = SD.open("data.txt", FILE_WRITE);
     if (dataFile) {
-      dataFile.print(mLugarFisico);
-      dataFile.print(",");
-      dataFile.print(now.timestamp());
-      dataFile.print(",");
-      dataFile.print(voltage);
-      dataFile.print(",");
-      dataFile.print(current);
-      dataFile.print(",");
-      dataFile.println(power);
+      StaticJsonDocument<200> jsonDocument;
+      jsonDocument["lugar"] = mLugarFisico;
+      jsonDocument["fecha_hora"] = now.timestamp();
+      jsonDocument["voltaje"] = voltage;
+      jsonDocument["amperaje"] = current;
+      jsonDocument["potencia"] = power;
+      String jsonData;
+      serializeJson(jsonDocument, jsonData);
+      dataFile.println(jsonData);
       dataFile.close();
     } else {
       Serial.println("Error al abrir el archivo en la tarjeta microSD");
+      mEstadoSD = false;
     }
     previousMillis = currentMillis;
   }
 
-  // Leer los comandos enviados por la comunicación Bluetooth
+  // Mostrar los datos en el display OLED
+  display.clearDisplay();
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(0, 0);
+  display.print("Lugar: ");
+  display.println(mLugarFisico);
+  display.print("Fecha: ");
+  display.print(now.timestamp());
+  display.println();
+  display.print("Hora: ");
+  display.print(now.timestamp());
+  display.println();
+  display.print("Voltaje: ");
+  display.print(voltage);
+  display.println(" mV");
+  display.print("Amperaje: ");
+  display.print(current);
+  display.println(" A");
+  display.print("Potencia: ");
+  display.print(power);
+  display.println(" W");
+  display.print("Nivel Bateria: ");
+  display.print(mNivelBateria);
+  display.println(" %");
+  if (!mEstadoSD) {
+    display.println("ERROR SD");
+  }
+  display.display();
+
+  // Enviar datos a la APK si se ha pasado el intervalo de envío
   if (BTSerial.available()) {
     String command = BTSerial.readString();
     if (command.startsWith("intervalo:")) {
