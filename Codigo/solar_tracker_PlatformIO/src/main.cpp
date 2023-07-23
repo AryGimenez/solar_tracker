@@ -1,48 +1,44 @@
-#include <Arduino.h>
-#include <Servo.h>
-#include <Wire.h>
-#include <Adafruit_ADS1015.h>
-#include <RTClib.h>
-#include <SD.h>
-#include <SPI.h>
-#include <SoftwareSerial.h>
-#include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
-#include <ArduinoJson.h>
-
-// Definición de los pines de los servos
-const int SERVO_VERTICAL_PIN = 7;
-const int SERVO_HORIZONTAL_PIN = 6;
+#include <Arduino.h>          // Librería para el uso de la placa Arduino y sus funciones básicas.
+#include <Servo.h>            // Librería para el control de servomotores.
+#include <Wire.h>             // Librería para la comunicación I2C, utilizada para el módulo de reloj Tiny RTC y el display OLED.
+#include <Adafruit_ADS1015.h> // Librería para el uso del ADC ADS1015, utilizado para el sensor de corriente ACS712.
+#include <RTClib.h>           // Librería para el manejo del reloj de tiempo real (RTC).
+#include <SD.h>               // Librería para el uso de la tarjeta microSD.
+#include <SPI.h>              // Librería para la comunicación SPI, utilizada para la tarjeta microSD.
+#include <SoftwareSerial.h>   // Librería para la comunicación serial de software, utilizada para el módulo Bluetooth HM-05.
+#include <Adafruit_GFX.h>     // Librería para el control de pantallas OLED utilizando el controlador SSD1306.
+#include <Adafruit_SSD1306.h> // Librería para el control de pantallas OLED utilizando el controlador SSD1306.
+#include <ArduinoJson.h>      // Librería para el manejo de datos en formato JSON.
 
 // Definición de los pines de las fotorresistencias
-const int LDR_UP_PIN = A3;
-const int LDR_DOWN_PIN = A2;
-const int LDR_RIGHT_PIN = A1;
-const int LDR_LEFT_PIN = A0;
+const int LDR_UP_PIN = LDR_UP_PIN;
+const int LDR_DOWN_PIN = LDR_DOWN_PIN;
+const int LDR_RIGHT_PIN = LDR_RIGHT_PIN;
+const int LDR_LEFT_PIN = LDR_LEFT_PIN;
 
 // Definición de los pines de los botones
-const int BTN_MODO_MANUAL_PIN = 4;
-const int BTN_SOLO_MOTOR_HORIZONTAL_PIN = 3;
-const int BTN_MODO_AUTOMATICO_PIN = 2;
+const int BTN_MODO_MANUAL_PIN = BTN_MODO_MANUAL_PIN;
+const int BTN_SOLO_MOTOR_HORIZONTAL_PIN = BTN_SOLO_MOTOR_HORIZONTAL_PIN;
+const int BTN_MODO_AUTOMATICO_PIN = BTN_MODO_AUTOMATICO_PIN;
 
 // Definición de los pines de los LEDs indicadores
-const int LED_MODO_MANUAL_PIN = 12;
-const int LED_SOLO_MOTOR_HORIZONTAL_PIN = 11;
-const int LED_AUTOMATICO_PIN = 10;
-const int LED_SD_ESTADO_PIN = 13;
+const int LED_MODO_MANUAL_PIN = LED_MODO_MANUAL_PIN;
+const int LED_SOLO_MOTOR_HORIZONTAL_PIN = LED_SOLO_MOTOR_HORIZONTAL_PIN;
+const int LED_AUTOMATICO_PIN = LED_AUTOMATICO_PIN;
+const int LED_SD_ESTADO_PIN = LED_SD_ESTADO_PIN;
 
 // Definición de los pines para el módulo de reloj Tiny RTC
-const int RTC_SDA_PIN = 20;
-const int RTC_SCL_PIN = 21;
+const int RTC_SDA_PIN = RTC_SDA_PIN;
+const int RTC_SCL_PIN = RTC_SCL_PIN;
 
 // Definición de los pines para el sensor de corriente ACS712
-const int ACS712_PIN = A4;
+const int ACS712_PIN = ACS712_PIN;
 
 // Definición de los pines para el módulo microSD Card
-const int SD_CS_PIN = 53;
+const int SD_CS_PIN = SD_CS_PIN;
 
 // Definición del pin para el nivel de batería
-const int NIVEL_BATERIA_PIN = A5;
+const int NIVEL_BATERIA_PIN = NIVEL_BATERIA_PIN;
 
 // Rangos para calibrar los valores de las fotorresistencias
 const int LDR_MIN = 0;
@@ -84,13 +80,14 @@ bool modoAutomatico = false;
 // Variables para almacenar los datos
 String mLugarFisico = "Lugar Fisico";
 unsigned long mIntervaloSensado = 10; // Intervalo de sensado en minutos (por defecto 10 minutos)
-unsigned long previousMillis = 0; // Variable para almacenar el tiempo anterior en milisegundos
-bool mEstadoSD = true; // Estado de la tarjeta SD (true = Funciona, false = No funciona)
+unsigned long previousMillis = 0;     // Variable para almacenar el tiempo anterior en milisegundos
+bool mEstadoSD = true;                // Estado de la tarjeta SD (true = Funciona, false = No funciona)
 
 // Variable para almacenar el nivel de batería
 float mNivelBateria = 0.0;
 
-void setup() {
+void setup()
+{
   // Inicialización de los pines de los servos
   servoVertical.attach(SERVO_VERTICAL_PIN);
   servoHorizontal.attach(SERVO_HORIZONTAL_PIN);
@@ -114,7 +111,8 @@ void setup() {
   ads.begin();
 
   // Inicialización del módulo microSD Card
-  if (!SD.begin(SD_CS_PIN)) {
+  if (!SD.begin(SD_CS_PIN))
+  {
     Serial.println("Error al inicializar la tarjeta microSD");
     mEstadoSD = false;
   }
@@ -123,7 +121,8 @@ void setup() {
   BTSerial.begin(9600);
 
   // Inicialización del display OLED SSD1306
-  if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+  if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C))
+  {
     Serial.println("Error al iniciar el display OLED SSD1306");
   }
 
@@ -142,22 +141,28 @@ void setup() {
   mNivelBateria = map(analogRead(NIVEL_BATERIA_PIN), 0, 1023, 0, 100);
 }
 
-void loop() {
+void loop()
+{
   // Leer el estado de los botones
   bool modoManualPressed = digitalRead(BTN_MODO_MANUAL_PIN) == LOW;
   bool modoSoloMotorHorizontalPressed = digitalRead(BTN_SOLO_MOTOR_HORIZONTAL_PIN) == LOW;
   bool modoAutomaticoPressed = digitalRead(BTN_MODO_AUTOMATICO_PIN) == LOW;
 
   // Actualizar los modos de funcionamiento según los botones presionados
-  if (modoManualPressed) {
+  if (modoManualPressed)
+  {
     modoManual = true;
     modoSoloMotorHorizontal = false;
     modoAutomatico = false;
-  } else if (modoSoloMotorHorizontalPressed) {
+  }
+  else if (modoSoloMotorHorizontalPressed)
+  {
     modoManual = false;
     modoSoloMotorHorizontal = true;
     modoAutomatico = false;
-  } else if (modoAutomaticoPressed) {
+  }
+  else if (modoAutomaticoPressed)
+  {
     modoManual = false;
     modoSoloMotorHorizontal = false;
     modoAutomatico = true;
@@ -170,16 +175,21 @@ void loop() {
   digitalWrite(LED_SD_ESTADO_PIN, mEstadoSD);
 
   // Verificar los modos de funcionamiento y realizar el seguimiento del sol correspondiente
-  if (modoManual) {
+  if (modoManual)
+  {
     // Realizar el seguimiento manual con el Arduino Joystick
     // Aquí puedes agregar tu código para controlar los servos con el módulo Arduino Joystick
-  } else if (modoSoloMotorHorizontal) {
+  }
+  else if (modoSoloMotorHorizontal)
+  {
     // Realizar el seguimiento automático en el eje horizontal
     int ldrLeftValue = analogRead(LDR_LEFT_PIN);
     int horizontalAngle = map(ldrLeftValue, LDR_MIN, LDR_MAX, HORIZONTAL_MIN_ANGLE, HORIZONTAL_MAX_ANGLE);
     servoVertical.write(VERTICAL_MIN_ANGLE);
     servoHorizontal.write(horizontalAngle);
-  } else if (modoAutomatico) {
+  }
+  else if (modoAutomatico)
+  {
     // Realizar el seguimiento automático en ambos ejes
     int ldrUpValue = analogRead(LDR_UP_PIN);
     int ldrDownValue = analogRead(LDR_DOWN_PIN);
@@ -204,9 +214,11 @@ void loop() {
 
   // Guardar los datos en la tarjeta microSD
   unsigned long currentMillis = millis();
-  if (currentMillis - previousMillis >= mIntervaloSensado * 60000) {
+  if (currentMillis - previousMillis >= mIntervaloSensado * 60000)
+  {
     dataFile = SD.open("data.txt", FILE_WRITE);
-    if (dataFile) {
+    if (dataFile)
+    {
       StaticJsonDocument<200> jsonDocument;
       jsonDocument["lugar"] = mLugarFisico;
       jsonDocument["fecha_hora"] = now.timestamp();
@@ -217,7 +229,9 @@ void loop() {
       serializeJson(jsonDocument, jsonData);
       dataFile.println(jsonData);
       dataFile.close();
-    } else {
+    }
+    else
+    {
       Serial.println("Error al abrir el archivo en la tarjeta microSD");
       mEstadoSD = false;
     }
@@ -249,18 +263,23 @@ void loop() {
   display.print("Nivel Bateria: ");
   display.print(mNivelBateria);
   display.println(" %");
-  if (!mEstadoSD) {
+  if (!mEstadoSD)
+  {
     display.println("ERROR SD");
   }
   display.display();
 
   // Enviar datos a la APK si se ha pasado el intervalo de envío
-  if (BTSerial.available()) {
+  if (BTSerial.available())
+  {
     String command = BTSerial.readString();
-    if (command.startsWith("intervalo:")) {
+    if (command.startsWith("intervalo:"))
+    {
       // Cambiar el rango de mIntervaloSensado para cambiar el intervalo de tiempo de sensado
       mIntervaloSensado = command.substring(10).toInt();
-    } else if (command.startsWith("fecha:")) {
+    }
+    else if (command.startsWith("fecha:"))
+    {
       // Cambiar la fecha del reloj Tiny RTC
       String fecha = command.substring(6);
       int year = fecha.substring(0, 4).toInt();
@@ -271,7 +290,9 @@ void loop() {
       int second = fecha.substring(17, 19).toInt();
       DateTime newTime(year, month, day, hour, minute, second);
       rtc.adjust(newTime);
-    } else if (command.startsWith("lugar:")) {
+    }
+    else if (command.startsWith("lugar:"))
+    {
       // Cambiar el valor de mLugarFisico
       mLugarFisico = command.substring(6);
     }
