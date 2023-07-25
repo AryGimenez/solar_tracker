@@ -59,8 +59,32 @@ void ServoSolarTrak::upgradeServo() {
         case 1: // Modo Manual
 
 
+
+
+
+        // Leer los valores analógicos de los sensores KY-023
+        int verticalValue = analogRead(VERTICAL_PIN);
+        int horizontalValue = analogRead(HORIZONTAL_PIN);
+
+        // Mapear los valores leídos a ángulos para los servos
+        int verticalAngle = map(verticalValue, 0, 1023, VERTICAL_MIN_ANGLE, VERTICAL_MAX_ANGLE);
+        int horizontalAngle = map(horizontalValue, 0, 1023, HORIZONTAL_MIN_ANGLE, HORIZONTAL_MAX_ANGLE);
+
+        // Mover los servos a los ángulos calculados
+        servoVertical.write(verticalAngle);
+        servoHorizontal.write(horizontalAngle);
+
+        // Esperar un breve tiempo antes de leer nuevamente los valores
+        delay(100);
+
+
+
+
+
         break;
         case 2: // Modo Motor Horizontal
+
+
             // Realizar el seguimiento automático en el eje horizontal
             int ldrRightValue = analogRead(LDR_RIGHT_PIN);
             int ldrLeftValue = analogRead(LDR_LEFT_PIN);
