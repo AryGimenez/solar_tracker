@@ -1,5 +1,5 @@
 #include <Arduino.h>          // Librería para el uso de la placa Arduino y sus funciones básicas.
-#include <Servo.h>            // Librería para el control de servomotores.
+
 #include <Wire.h>             // Librería para la comunicación I2C, utilizada para el módulo de reloj Tiny RTC y el display OLED.
 #include <Adafruit_ADS1015.h> // Librería para el uso del ADC ADS1015, utilizado para el sensor de corriente ACS712.
 #include <RTClib.h>           // Librería para el manejo del reloj de tiempo real (RTC).
@@ -10,21 +10,10 @@
 #include <Adafruit_SSD1306.h> // Librería para el control de pantallas OLED utilizando el controlador SSD1306.
 #include <ArduinoJson.h>      // Librería para el manejo de datos en formato JSON.
 
-// Definición de los pines de las fotorresistencias
-const int LDR_UP_PIN = LDR_UP_PIN;
-const int LDR_DOWN_PIN = LDR_DOWN_PIN;
-const int LDR_RIGHT_PIN = LDR_RIGHT_PIN;
-const int LDR_LEFT_PIN = LDR_LEFT_PIN;
 
-// Definición de los pines de los botones
-const int BTN_MODO_MANUAL_PIN = BTN_MODO_MANUAL_PIN;
-const int BTN_SOLO_MOTOR_HORIZONTAL_PIN = BTN_SOLO_MOTOR_HORIZONTAL_PIN;
-const int BTN_MODO_AUTOMATICO_PIN = BTN_MODO_AUTOMATICO_PIN;
+
 
 // Definición de los pines de los LEDs indicadores
-const int LED_MODO_MANUAL_PIN = LED_MODO_MANUAL_PIN;
-const int LED_SOLO_MOTOR_HORIZONTAL_PIN = LED_SOLO_MOTOR_HORIZONTAL_PIN;
-const int LED_AUTOMATICO_PIN = LED_AUTOMATICO_PIN;
 const int LED_SD_ESTADO_PIN = LED_SD_ESTADO_PIN;
 
 // Definición de los pines para el módulo de reloj Tiny RTC
@@ -40,19 +29,7 @@ const int SD_CS_PIN = SD_CS_PIN;
 // Definición del pin para el nivel de batería
 const int NIVEL_BATERIA_PIN = NIVEL_BATERIA_PIN;
 
-// Rangos para calibrar los valores de las fotorresistencias
-const int LDR_MIN = 0;
-const int LDR_MAX = 1023;
 
-// Valores límite para el movimiento de los servos
-const int VERTICAL_MIN_ANGLE = 0;
-const int VERTICAL_MAX_ANGLE = 180;
-const int HORIZONTAL_MIN_ANGLE = 0;
-const int HORIZONTAL_MAX_ANGLE = 180;
-
-// Crear objetos de los servos
-Servo servoVertical;
-Servo servoHorizontal;
 
 // Crear objeto para el módulo de reloj Tiny RTC
 RTC_DS1307 rtc;
@@ -72,15 +49,12 @@ SoftwareSerial BTSerial(8, 9); // RX, TX
 #define SCREEN_HEIGHT 64
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 
-// Variables para almacenar los modos de funcionamiento
-bool modoManual = false;
-bool modoSoloMotorHorizontal = false;
-bool modoAutomatico = false;
+
 
 // Variables para almacenar los datos
 String mLugarFisico = "Lugar Fisico";
-unsigned long mIntervaloSensado = 10; // Intervalo de sensado en minutos (por defecto 10 minutos)
-unsigned long previousMillis = 0;     // Variable para almacenar el tiempo anterior en milisegundos
+int mIntervaloSensado = 10; // Intervalo de sensado en minutos (por defecto 10 minutos)
+int previousMillis = 0;     // Variable para almacenar el tiempo anterior en milisegundos
 bool mEstadoSD = true;                // Estado de la tarjeta SD (true = Funciona, false = No funciona)
 
 // Variable para almacenar el nivel de batería
@@ -88,20 +62,8 @@ float mNivelBateria = 0.0;
 
 void setup()
 {
-  // Inicialización de los pines de los servos
-  servoVertical.attach(SERVO_VERTICAL_PIN);
-  servoHorizontal.attach(SERVO_HORIZONTAL_PIN);
 
-  // Inicialización de los pines de los botones
-  pinMode(BTN_MODO_MANUAL_PIN, INPUT_PULLUP);
-  pinMode(BTN_SOLO_MOTOR_HORIZONTAL_PIN, INPUT_PULLUP);
-  pinMode(BTN_MODO_AUTOMATICO_PIN, INPUT_PULLUP);
 
-  // Inicialización de los pines de los LEDs indicadores
-  pinMode(LED_MODO_MANUAL_PIN, OUTPUT);
-  pinMode(LED_SOLO_MOTOR_HORIZONTAL_PIN, OUTPUT);
-  pinMode(LED_AUTOMATICO_PIN, OUTPUT);
-  pinMode(LED_SD_ESTADO_PIN, OUTPUT);
 
   // Inicialización del módulo de reloj Tiny RTC
   Wire.begin(RTC_SDA_PIN, RTC_SCL_PIN);
@@ -143,43 +105,14 @@ void setup()
 
 void loop()
 {
-  // Leer el estado de los botones
-  bool modoManualPressed = digitalRead(BTN_MODO_MANUAL_PIN) == LOW;
-  bool modoSoloMotorHorizontalPressed = digitalRead(BTN_SOLO_MOTOR_HORIZONTAL_PIN) == LOW;
-  bool modoAutomaticoPressed = digitalRead(BTN_MODO_AUTOMATICO_PIN) == LOW;
+ 
 
-  // Actualizar los modos de funcionamiento según los botones presionados
-  if (modoManualPressed)
-  {
-    modoManual = true;
-    modoSoloMotorHorizontal = false;
-    modoAutomatico = false;
-  }
-  else if (modoSoloMotorHorizontalPressed)
-  {
-    modoManual = false;
-    modoSoloMotorHorizontal = true;
-    modoAutomatico = false;
-  }
-  else if (modoAutomaticoPressed)
-  {
-    modoManual = false;
-    modoSoloMotorHorizontal = false;
-    modoAutomatico = true;
-  }
+  
 
-  // Actualizar los LEDs indicadores según los modos de funcionamiento
-  digitalWrite(LED_MODO_MANUAL_PIN, modoManual);
-  digitalWrite(LED_SOLO_MOTOR_HORIZONTAL_PIN, modoSoloMotorHorizontal);
-  digitalWrite(LED_AUTOMATICO_PIN, modoAutomatico);
-  digitalWrite(LED_SD_ESTADO_PIN, mEstadoSD);
 
-  // Verificar los modos de funcionamiento y realizar el seguimiento del sol correspondiente
-  if (modoManual)
-  {
-    // Realizar el seguimiento manual con el Arduino Joystick
-    // Aquí puedes agregar tu código para controlar los servos con el módulo Arduino Joystick
-  }
+
+
+
   else if (modoSoloMotorHorizontal)
   {
     // Realizar el seguimiento automático en el eje horizontal
