@@ -1,0 +1,27 @@
+solar_tracker_platformio
+  |- src
+  |    |- main.cpp
+  |- lib
+  |    |- ServoSolarTrak
+  |    |    |- ServoSolarTrak.h
+  |    |    |----- Publico
+  |    |    |     ServoSolarTrak(int verticalPin, int horizontalPin)
+  |    |    |     void attach()
+  |    |    |     void detach()
+  |    |    |     void setVerticalAngle(int angle)
+  |    |    |     void setHorizontalAngle(int angle)
+  |    |    |     void setModoUsu(unsigned int modoFuncionamiento)
+  |    |    |- ServoSolarTrak.cpp
+  |    |- ModoUso
+  |    |    |- ModoUso.h
+  |    |    |- ModoUso.cpp
+  |    |- RelojRTC
+  |    |    |- RelojRTC.h
+  |    |    |- RelojRTC.cpp
+  |    |- SDCard
+  |    |    |- SDCard.h
+  |    |    |- SDCard.cpp
+  |    |- PantallaOLED
+  |         |- PantallaOLED.h
+  |         |- PantallaOLED.cpp
+  |- platformio.ini
