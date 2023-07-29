@@ -1,27 +1,62 @@
+Estructura de archivo 
 solar_tracker_platformio
-  |- src
-  |    |- main.cpp
-  |- lib
-  |    |- ServoSolarTrak
-  |    |    |- ServoSolarTrak.h
-  |    |    |----- Publico
-  |    |    |     ServoSolarTrak(int verticalPin, int horizontalPin)
-  |    |    |     void attach()
-  |    |    |     void detach()
-  |    |    |     void setVerticalAngle(int angle)
-  |    |    |     void setHorizontalAngle(int angle)
-  |    |    |     void setModoUsu(unsigned int modoFuncionamiento)
-  |    |    |- ServoSolarTrak.cpp
-  |    |- ModoUso
-  |    |    |- ModoUso.h
-  |    |    |- ModoUso.cpp
-  |    |- RelojRTC
-  |    |    |- RelojRTC.h
-  |    |    |- RelojRTC.cpp
-  |    |- SDCard
-  |    |    |- SDCard.h
-  |    |    |- SDCard.cpp
-  |    |- PantallaOLED
-  |         |- PantallaOLED.h
-  |         |- PantallaOLED.cpp
-  |- platformio.ini
+|
+|- src
+|    |- main.cpp
+|
+|- lib
+|    |- BusI2C
+|    |    |- BusI2C.h
+|    |    |----- public
+|    |    |         BusI2C(int RTC_SDA_PIN, int RTC_SCL_PIN)
+|    |    |         void begin()
+|    |    |- BusI2C.cpp
+|    |
+|    |- ServoSolarTrak
+|    |    |- ServoSolarTrak.h
+|    |    |----- public
+|    |    |         ServoSolarTrak(int verticalPin, int horizontalPin)
+|    |    |         void attach()
+|    |    |         void detach()
+|    |    |         void setVerticalAngle(int angle)
+|    |    |         void setHorizontalAngle(int angle)
+|    |    |         void setModoUso(unsigned int modoFuncionamiento)
+|    |    |         void upgradeServo()
+|    |    |----- private
+|    |    |         void _upgradeJoystick()
+|    |    |         void _upgradeJoystickVertical()
+|    |    |- ServoSolarTrak.cpp
+|    |
+|    |- ModoUso
+|    |    |- ModoUso.h
+|    |    |----- public
+|    |    |         ModoUso(int btnModoManualPIN, int btnModoSoloMotor, 
+|    |    |             int btnModoAutomatico, int ledModoManual, 
+|    |    |             int ledModoSoloMotor, int ledModoAutomatico)
+|    |    |         void attach()
+|    |    |         void upgradeLEDs()
+|    |    |         unsigned char getModoFuncionamiento()
+|    |    |----- private
+|    |    |         None
+|    |    |- ModoUso.cpp
+|    |
+|    |- RelojRTC
+|    |    |- RelojRTC.h
+|    |    |----- public
+|    |    |         RelojRTC(int RTC_SDA_PIN, int RTC_SCL_PIN)
+|    |    |         void begin()
+|    |    |         void actualizar()
+|    |    |         DateTime getFechaHora()
+|    |    |----- private
+|    |    |         None
+|    |    |- RelojRTC.cpp
+|    |
+|    |- SDCard
+|    |    |- SDCard.h
+|    |    |- SDCard.cpp
+|    |
+|    |- PantallaOLED
+|    |    |- PantallaOLED.h
+|    |    |- PantallaOLED.cpp
+|
+|- platformio.ini

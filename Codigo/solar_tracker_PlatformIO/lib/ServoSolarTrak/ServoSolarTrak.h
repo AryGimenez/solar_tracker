@@ -5,7 +5,6 @@
 #include <Servo.h>
 
 class ServoSolarTrak {
-
 private:
     int _servoVerticalPin; // Pin para el servo vertical
     int _servoHorizontalPin; // Pin para el servo horizontal
@@ -34,14 +33,17 @@ private:
     const int _LDR_RIGHT_PIN; // ➡️
     const int _LDR_LEFT_PIN; // ⬅️
     
-    // Definicion de los pines de Modulo Joystick Arduino KY 023 🕹️
+    // Definición de los pines de Modulo Joystick Arduino KY 023 🕹️
     const int _JOYSTICK_VERTICAL_PIN; // Pin para el joystick vertical
     const int _JOYSTICK_HORISONTAL_PIN; // Pin para el joystick horizontal
 
-    // Metodos para el control de los servos utilizando el Joystick Arduino KY 023 🕹️
-    void _upgradeJoystick(); // Modifica el los Angulos de los servos utilizando el Joystick (Para modo de funcionamiento 1 - Modo Manual)
+    // Métodos para el control de los servos utilizando el Joystick Arduino KY 023 🕹️
+    void _upgradeJoystick(); // Modifica el los Ángulos de los servos utilizando el Joystick (Para modo de funcionamiento 1 - Modo Manual)
     void _upgradeJoystickVertical(); // Modifica el angulo de el servo vertical utilizando el Joystick (Par funcionamiento 2 - Modo Motor Horizontal)
     
+    // Métodos para el control de los servos utilizando las fotorresistencias 🌞
+    void _upgradeLDRH(); // Modifica los ángulos de los servos utilizando las fotorresistencias LDR (Para modo de funcionamiento 3 - Modo Automático))
+    void _upgradeLDRHorizontal(); // Modifica el angulo de el servo horizontal utilizando las fotorresistencias LDR (Par modo de funcionamiento 2 - Modo Motor Horizontal)
 
 public:
 

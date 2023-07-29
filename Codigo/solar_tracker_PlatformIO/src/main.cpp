@@ -16,10 +16,6 @@
 // Definición de los pines de los LEDs indicadores
 const int LED_SD_ESTADO_PIN = LED_SD_ESTADO_PIN;
 
-// Definición de los pines para el módulo de reloj Tiny RTC
-const int RTC_SDA_PIN = RTC_SDA_PIN;
-const int RTC_SCL_PIN = RTC_SCL_PIN;
-
 // Definición de los pines para el sensor de corriente ACS712
 const int ACS712_PIN = ACS712_PIN;
 
