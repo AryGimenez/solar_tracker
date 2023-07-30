@@ -1,7 +1,7 @@
 #include "SDCard.h"
 
 // Constructor de la clase que recibe el pin de selección del chip para la tarjeta SD
-SDCard::SDCard(int chipSelectPin) : _chipSelectPin(chipSelectPin) {}
+SDCard::SDCard(unsigned shrt chipSelectPin) : _chipSelectPin(chipSelectPin) {}
 
 // Inicialización de la tarjeta SD y el sistema de archivos
 bool SDCard::begin() {
@@ -20,9 +20,40 @@ String getLugarFisico() {
 
 // Modifica el lugar físico donde se encuentra el Solar Tracker y lo guarda 
 // en la tarjeta SD 
-void setLugarFisico(String lugarFisico) {
-    _lugarFisico = lugarFisico;
+bool setLugarFisico(String _LugarFisi){
+    return updateConfigFile(fecha_hora);
 }
+
+bool SDCard::updateConfigFile(unsigned short minutosEspera, String lugarFisico) {
+    // Abrir el archivo en modo escritura
+    File file = SD.open (_fichConfig, FILE_WRITE);
+    
+    if (file) {
+        // Crear un objeto DynamicJsonDocument para almacenar los datos del JSON
+        DynamicJsonDocument jsonDocument(256);
+
+        // Crear un objeto JsonObject y agregarlo al objeto jsonDocument
+        JsonObject jsonObject = jsonDocument.to<JsonObject>();
+
+        // Agregar los datos al objeto JSON utilizando claves y valores
+        jsonObject["minutos_espera"] = minutosEspera; // Convertir la fecha y hora a un valor numérico (timestamp)
+        jsonObject["lugar_fisico"] = lugarFisico;
+
+        // Escribir el objeto JSON en el archivo
+        if (serializeJson(jsonDocument, file) == 0) {
+            file.close();
+            return false; // Falló la escritura del JSON en el archivo
+        }
+
+        // Cerrar el archivo después de escribir en él
+        file.close();
+        
+        return true; // Operación exitosa
+    } else {
+        return false; // Falló al abrir el archivo para escritura
+    }
+}
+
 
 // Escribir datos en un archivo existente en la tarjeta SD
 bool SDCard::writeToFile(DateTime fecha_hora, float amperaje, float voltaje, float potencia){

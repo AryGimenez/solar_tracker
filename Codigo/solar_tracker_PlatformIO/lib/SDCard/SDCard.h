@@ -9,7 +9,7 @@ class SDCard
 {
 public:
     // Constructor de la clase que recibe el pin CS para la tarjeta SD
-    SDCard(int chipSelectPin);
+    SDCard(unsigned short chipSelectPin);
 
     // Inicializar de la tarjeta SD
     bool begin();
@@ -19,10 +19,13 @@ public:
 
     // Modifica el lugar físico donde se encuentra el Solar Tracker y lo guarda 
     // en la tarjeta SD 
-    void setLugarFisico(String lugarFisico);
+    bool setFechaFisico (DateTime fecha_hora);
+
+
+    bool setLugarFisico(String lugarFisico);
 
     // Modifica los minutos de espera para guardar los datos en la tarjeta SD
-    void setMinutosEspera(int minutosEspera);
+    void setMinutosEspera(unsigned short minutosEspera);
 
     // Escribir datos en un archivo existente en la tarjeta SD
     bool writeDatos(DateTime fecha_hora, float amperaje, float voltaje, float potencia);
@@ -30,13 +33,13 @@ public:
 
 
 private:
-    int _chipSelectPin;  // Pin de selección de la tarjeta SD
+    unsigned short _chipSelectPin;  // Pin de selección de la tarjeta SD
     String _lugarFisico; // Lugar físico donde se encuentra el Solar Tracker
-    int _minutosEspera;  // Minutos de espera para guardar los datos en la tarjeta SD
+    unsigned short _minutosEspera;  // Minutos de espera para guardar los datos en la tarjeta SD
 
     // Nombres de los ficheros
-    const String _fichDatos = "datos.txt"  // nombre de fichero para guardar los datos del Solar Tracker
-    const String _fichConfig = "config.txt" // nombre del fichero para guardar la configuración del Solar Tracker
+    const char _fichDatos[] PROGMEM = "datos.txt";  // nombre de fichero para guardar los datos del Solar Tracker
+    const char _fichConfig[] = "config.txt" // nombre del fichero para guardar la configuración del Solar Tracker
 
     String _getJSON (DateTime fecha_hora, float amperaje, float voltaje, float potencia);
 
