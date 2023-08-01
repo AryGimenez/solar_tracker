@@ -19,10 +19,11 @@ public:
 
     // Modifica el lugar físico donde se encuentra el Solar Tracker y lo guarda 
     // en la tarjeta SD 
-    bool setFechaFisico (DateTime fecha_hora);
-
-
     bool setLugarFisico(String lugarFisico);
+
+
+    // Retorna los minutos de espera guardados en la tarjeta SD
+    unsigned short getMinutosEspera();
 
     // Modifica los minutos de espera para guardar los datos en la tarjeta SD
     void setMinutosEspera(unsigned short minutosEspera);
@@ -33,13 +34,24 @@ public:
 
 
 private:
-    unsigned short _chipSelectPin;  // Pin de selección de la tarjeta SD
-    String _lugarFisico; // Lugar físico donde se encuentra el Solar Tracker
-    unsigned short _minutosEspera;  // Minutos de espera para guardar los datos en la tarjeta SD
+
+
+
+    const unsigned short _chipSelectPin;  // Pin de selección de la tarjeta SD
+    
+    String _lugarFisico = "Salto"; // Lugar físico donde se encuentra el Solar Tracker
+    unsigned short _minutosEspera = 5;  // Minutos de espera para guardar los datos en la tarjeta SD
+
+    bool _estadoSD; // Estado de la tarjeta SD
 
     // Nombres de los ficheros
-    const char _fichDatos[] PROGMEM = "datos.txt";  // nombre de fichero para guardar los datos del Solar Tracker
+    const char _fichDatos[] = "datos.txt";  // nombre de fichero para guardar los datos del Solar Tracker
     const char _fichConfig[] = "config.txt" // nombre del fichero para guardar la configuración del Solar Tracker
+
+    
+    bool loadConfig(); // Carga la configuración del Solar Tracker desde la tarjeta SD
+
+    bool updateConfigFile(); // Actualiza la configuración del Solar Tracker en la tarjeta SD
 
     String _getJSON (DateTime fecha_hora, float amperaje, float voltaje, float potencia);
 

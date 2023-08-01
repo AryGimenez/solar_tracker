@@ -1,27 +1,91 @@
 #include "SDCard.h"
 
+// public ---------------------------------------
+
 // Constructor de la clase que recibe el pin de selección del chip para la tarjeta SD
 SDCard::SDCard(unsigned shrt chipSelectPin) : _chipSelectPin(chipSelectPin) {}
 
 // Inicialización de la tarjeta SD y el sistema de archivos
 bool SDCard::begin() {
     if (SD.begin(_chipSelectPin)) {
+        _estadoSD = true; // Se ha inicializado correctamente la tarjeta SD
         return true; // Se ha inicializado correctamente la tarjeta SD
 
     } else {
+
+        _estadoSD = false; // No se ha inicializado correctamente la tarjeta SD
         return false; // Fallo en la inicializarían de la tarjeta SD
     }
 }
 
 // Retorna el lugar físico donde se encuentra el Solar Tracker
-String getLugarFisico() {
+String SDCard::getLugarFisico() {
     return _lugarFisico;
 }
 
 // Modifica el lugar físico donde se encuentra el Solar Tracker y lo guarda 
 // en la tarjeta SD 
-bool setLugarFisico(String _LugarFisi){
-    return updateConfigFile(fecha_hora);
+bool SDCard::setLugarFisico(String lugarFisico){
+    _lugarFisico = lugarFisico;
+    return SDCard.updateConfigFile(_minutosEspera, lugarFisico);
+}
+
+// Retorna el tiempo de espera entre mediciones
+unsignd short SDCard::getMinutosEspera() {
+    return _minutosEspera;
+}
+
+bool SDCard::setMinutosEspera(unsigned short minutosEspera) {
+    unsigned short _minutosEspera = minutosEspera;
+    return SDCard.updateConfigFile(minutosEspera, _lugarFisico);
+}
+
+// Escribir datos en un archivo existente en la tarjeta SD
+bool SDCard::writeToFile(DateTime fecha_hora, float amperaje, float voltaje, float potencia){
+    File file = SD.open(_fichDatos, FILE_WRITE); // Abrir el archivo en modo escritura
+    if (file) {
+        file.println(SDCard::_getJSON(fecha_hora, amperaje, voltaje, potencia)); // Escribir los datos en el archivo
+        file.close(); // Cerrar el archivo
+        return true; // Se han escrito los datos exitosamenteSDCard.
+    } else {
+        return false; // Fallo al abrir el archivo para escritura
+    }
+}
+
+// private ---------------------------------------
+
+
+bool SDCard::loadConfig () {
+    // Abrir el archivo en modo lectura
+    File file = SD.open(_fichConfig);
+
+    if (file) {
+        // Crear un objeto DynamicJsonDocument para almacenar los datos del JSON
+        DynamicJsonDocument jsonDocument(256);
+
+        // Leer el archivo y parsear el JSON
+        DeserializationError error = deserializeJson(jsonDocument, file);
+
+        // Verificar si se pudo parsear correctamente el JSON
+        if (error) {
+            Serial.println("Error al parsear JSON");
+            _estadoSD = false; // No se ha inicializado correctamente la tarjeta SD
+            return false; // Falló al parsear el JSON
+        }
+
+        // Obtener los datos del JSON
+        _minutosEspera = jsonDocument["minutos_espera"];
+        _lugarFisico = jsonDocument["lugar_fisico"];
+
+        // Cerrar el archivo después de leerlo
+        file.close();
+
+        _estadoSD = true; // Se ha inicializado correctamente la tarjeta SD
+        return true; // Operación exitosa
+    } else {
+        _estadoSD = false; // No se ha inicializado correctamente la tarjeta SD
+        return false; // Falló al abrir el archivo para lectura
+    }
 }
 
 bool SDCard::updateConfigFile(unsigned short minutosEspera, String lugarFisico) {
@@ -42,6 +106,7 @@ bool SDCard::updateConfigFile(unsigned short minutosEspera, String lugarFisico) 
         // Escribir el objeto JSON en el archivo
         if (serializeJson(jsonDocument, file) == 0) {
             file.close();
+            _
             return false; // Falló la escritura del JSON en el archivo
         }
 
@@ -51,19 +116,6 @@ bool SDCard::updateConfigFile(unsigned short minutosEspera, String lugarFisico) 
         return true; // Operación exitosa
     } else {
         return false; // Falló al abrir el archivo para escritura
-    }
-}
-
-
-// Escribir datos en un archivo existente en la tarjeta SD
-bool SDCard::writeToFile(DateTime fecha_hora, float amperaje, float voltaje, float potencia){
-    File file = SD.open(_fichDatos, FILE_WRITE); // Abrir el archivo en modo escritura
-    if (file) {
-        file.println(SDCard::_getJSON(fecha_hora, amperaje, voltaje, potencia)); // Escribir los datos en el archivo
-        file.close(); // Cerrar el archivo
-        return true; // Se han escrito los datos exitosamenteSDCard.
-    } else {
-        return false; // Fallo al abrir el archivo para escritura
     }
 }
 
