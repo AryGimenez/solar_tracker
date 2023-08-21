@@ -60,3 +60,14 @@ solar_tracker_platformio
 |    |    |- PantallaOLED.cpp
 |
 |- platformio.ini
+
+
+
+|- src
+|    |- main.cpp
+|- lib
+|    |- SDCard
+|    |    |- SDCard.h
+|    |    |- SDCard.cpp
+|- platformio.ini
+

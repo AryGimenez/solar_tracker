@@ -1,7 +1,10 @@
 #include "LedAdvertencia.h"
 
 // Constructor de la clase que recibe el pin para el led de advertencia
-LedAdvertencia::LedAdvertencia(int ledAdvertenciaPIN) : _ledAdvertenciaPIN(ledAdvertenciaPIN) {}
+LedAdvertencia::LedAdvertencia(uint8_t ledAdvertenciaPIN) 
+                                : 
+                                _ledAdvertenciaPIN(ledAdvertenciaPIN) 
+{}
 
 // Inicialización del led de advertencia
 void LedAdvertencia::begin() {

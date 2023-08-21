@@ -8,7 +8,7 @@ class SensorVAI{
 
 public:
 
-    SensorVAI(unsigned short sensorAmperajePIN, unsigned short sensorVoltajePIN);
+    SensorVAI(uint8_t sensorAmperajePIN, uint8_t sensorVoltajePIN);
 
     // Inicializa Los sensores de voltaje y amperaje
     void begin();
@@ -28,12 +28,14 @@ public:
     
 
 private:
-    float _voltaje;
-    float _amperaje; 
-    float _potencia; 
+    float _voltaje = 0;
+    float _amperaje = 0; 
+    float _potencia = 0; 
 
-    const unsigned short _sensorAmperajePIN; // Sensor ACS712
-    const unsigned short _sensorVoltajePIN; // Sensor FZ0430
+    const uint8_t _sensorAmperajePIN; // Sensor ACS712
+    const uint8_t _sensorVoltajePIN; // Sensor FZ0430
 
 
 };
+
+#endif // SensorVAI_h

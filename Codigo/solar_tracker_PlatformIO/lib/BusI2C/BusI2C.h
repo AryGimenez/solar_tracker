@@ -5,17 +5,16 @@
 #include <Wire.h>
 
 class BusI2C{
-private:
-    const int _RTC_SDA_PIN;
-    const int _RTC_SCL_PIN;
-
-
-
 public:
-    BusI2C(int RTC_SDA_PIN, int RTC_SCL_PIN);
+    BusI2C(uint8_t rtcSDA_PIN, uint8_t rtcSCL_PIN);
 
     // Inicializacion de la comunicación I2C con los pines SDA y SCL
     void begin();
 
+private:
+    const uint8_t _rtcSDA_PIN;
+    const uint8_t _rtcSCL_PIN;
 };
+
+#endif // BusI2C_h
  

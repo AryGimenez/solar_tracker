@@ -6,7 +6,7 @@
 class LedAdvertencia {
 public:
     // Constructor de la clase que recibe el pin para el led de advertencia
-    LedAdvertencia(int _ledAdvertenciaPIN);
+    LedAdvertencia(uint8_t ledAdvertenciaPIN);
 
     // Inicialización del led de advertencia
     void begin();
@@ -19,5 +19,7 @@ public:
 
 
 private:
-    const int _ledAdvertenciaPIN; // Pin para el led de advertencia
+    const uint8_t _ledAdvertenciaPIN; // Pin para el led de advertencia
 };
+
+#endif // LedAdvertencia_h

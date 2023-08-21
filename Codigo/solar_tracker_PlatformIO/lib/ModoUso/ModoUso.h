@@ -6,12 +6,12 @@
 class ModoUso
 {
 public:
-    ModoUso(int btnModoManualPIN,
-            int btnModoSoloMotor,
-            int btnModoAutomatico,
-            int _ledModoManual,
-            int _ledModoSoloMotor,
-            int _ledModoAutomatico);
+    ModoUso(uint8_t btnModoManualPIN,
+            uint8_t btnModoMotorHorizontal,
+            uint8_t btnModoAutomatico,
+            uint8_t _ledModoManual,
+            uint8_t _ledModoSoloMotor,
+            uint8_t _ledModoAutomatico);
 
     // Inicializa los pines y los botones y de el led
     // de modo _ledModoManualPIN esta encendido
@@ -23,20 +23,20 @@ public:
 
 private:
     // Variables Botón Indicador Modo
-    const int _btnModoManualPIN;
-    const int _btnModoSoloMotor;
-    const int _btnModoAutomatico;
+    const uint8_t _btnModoManualPIN;
+    const uint8_t _btnModoMotorHorizontal;
+    const uint8_t _btnModoAutomatico;
 
     // Variables Led Indicador Modo
-    const int _ledModoManualPIN;
-    const int _ledModoSoloMotorPIN;
-    const int _ledModoAutomaticoPIN;
+    const uint8_t _ledModoManualPIN;
+    const uint8_t _ledModoSoloMotorPIN;
+    const uint8_t _ledModoAutomaticoPIN;
 
     // Variables para almacenar los modos de funcionamiento
     // 1 - Manual
     // 2 - Modo motor Horizontal
     // 3 - Modo Automático
-    unsigned char _modoFuncionamiento = '3';
+    uint8_t _modoFuncionamiento = '3';
 };
 
 #endif

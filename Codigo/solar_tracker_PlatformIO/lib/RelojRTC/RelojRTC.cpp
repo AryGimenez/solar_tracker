@@ -11,7 +11,7 @@ void RelojRTC::begin() {
   // Inicializar el módulo RTC
   _moduloRelojRTC.begin();
 
-  if (_moduloRelojRTC.isrunning()) {
+  if (_moduloRelojRTC.lostPower()) {
     _estadoRTC = true;
     _fechaHora = _moduloRelojRTC.now();
   }else{
@@ -27,7 +27,7 @@ void RelojRTC::begin() {
 // Actualiza la fecha y hora almacenadas en el RelojRTC
 void RelojRTC::actualizar() {
   
-  if (_moduloRelojRTC.isrunning()) {
+  if (_moduloRelojRTC.lostPower()) {
     _estadoRTC = true;
     _fechaHora = _moduloRelojRTC.now();
   }else{
@@ -43,7 +43,7 @@ void RelojRTC::actualizar() {
 // Método para establecer una nueva fecha y hora en el módulo RTC
 void RelojRTC::setFechaHora(DateTime fechaHora) {
   // Verificar si el módulo RTC está en funcionamiento
-  if (_moduloRelojRTC.isrunning()) {
+  if (_moduloRelojRTC.lostPower()) {
     // Ajustar la nueva fecha y hora en el módulo RTC
     _moduloRelojRTC.adjust(fechaHora);
     _estadoRTC = true; 
@@ -73,7 +73,7 @@ bool RelojRTC::hanPasadoMinutos() {
     return false; // No han pasado suficientes minutos
   }
 }
-_fechaDisparador = _fechaHora;_fechaDisparador = _fechaHora;_fechaDisparador = _fechaHora;
+
 // Reiniciar el contador de minutos
 void RelojRTC::resetPasadoMinutos() {
   _fechaDisparador = _fechaHora;

@@ -1,34 +1,43 @@
 #include "PantallaOLED.h"
 
-PantallaOLED::PantallaOLED(int screenWidth, int screenHeight)
-    : _screenWidth(screenWidth), _screenHeight(screenHeight) {}
+PantallaOLED::PantallaOLED() : _display(_ANCHO_PANTALLA, _ALTO_PANTALLA, &Wire, -1) {
+}
+
 
 void PantallaOLED::begin() {
-    _display.begin(SSD1306_SWITCHCAPVCC, 0x3C); // Dirección I2C de la pantalla OLED
-    _display.clearDisplay();
-    _display.display();
+    // Inicializamos la pantalla OLED 
+    if (_display.begin(SSD1306_SWITCHCAPVCC, _DireccionPantalla)){
+        _errorPantalla = false;
+        _display.clearDisplay();
+        _display.display();
+    }else{
+        _errorPantalla = true;
+    }
+    
 }
 
-void PantallaOLED::clearScreen() {
-    _display.clearDisplay();
+
+void PantallaOLED::setVoltaje(float voltaje) {
+    _voltaje = voltaje;
+    _potencia = _voltaje * _amperaje;
 }
 
-void PantallaOLED::displayText(int x, int y, const char* text) {
+void PantallaOLED::setAmperaje(float amperaje) {
+    _amperaje = amperaje;
+    _potencia = _voltaje * _amperaje;
+}
+
+
+
+void PantallaOLED::actualizarPantalla() {
+    _display.clearDisplay();
     _display.setTextSize(1);
     _display.setTextColor(SSD1306_WHITE);
-    _display.setCursor(x, y);
-    _display.print(text);
-}
+    _display.setCursor(0, 0);
 
-void PantallaOLED::drawRect(int x, int y, int width, int height, bool filled) {
-    _display.drawRect(x, y, width, height, filled ? SSD1306_WHITE : SSD1306_BLACK);
-}
+    _display.println("Voltaje: " + String(_voltaje) + " V");
+    _display.println("Amperaje: " + String(_amperaje) + " A");
+    _display.println("Potencia: " + String(_potencia) + " W");
 
-void PantallaOLED::drawCircle(int x, int y, int radius, bool filled) {
-    _display.drawCircle(x, y, radius, filled ? SSD1306_WHITE : SSD1306_BLACK);
-}
-
-void PantallaOLED::displayBitmap(const unsigned char* bitmap, int width, int height) {
-    _display.drawBitmap(0, 0, bitmap, width, height, SSD1306_WHITE);
     _display.display();
 }

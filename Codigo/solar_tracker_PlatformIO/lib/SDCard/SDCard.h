@@ -4,12 +4,13 @@
 #include <Arduino.h>
 #include <ArduinoJson.h>
 #include <SD.h>
+#include <RTClib.h>
 
 class SDCard
 {
 public:
     // Constructor de la clase que recibe el pin CS para la tarjeta SD
-    SDCard(unsigned short chipSelectPin);
+    SDCard(uint8_t chipSelectPin);
 
     // Inicializar de la tarjeta SD
     bool begin();
@@ -23,35 +24,30 @@ public:
 
 
     // Retorna los minutos de espera guardados en la tarjeta SD
-    unsigned short getMinutosEspera();
+    uint8_t getMinutosEspera();
 
     // Modifica los minutos de espera para guardar los datos en la tarjeta SD
-    void setMinutosEspera(unsigned short minutosEspera);
+    bool setMinutosEspera(uint8_t minutosEspera);
 
     // Escribir datos en un archivo existente en la tarjeta SD
-    bool writeDatos(DateTime fecha_hora, float amperaje, float voltaje, float potencia);
-
-
+    bool guardarDatos(DateTime fecha_hora, float amperaje, float voltaje, float potencia);
 
 private:
-
-
-
-    const unsigned short _chipSelectPin;  // Pin de selección de la tarjeta SD
+    const uint8_t _chipSelectPin;  // Pin de selección de la tarjeta SD
     
     String _lugarFisico = "Salto"; // Lugar físico donde se encuentra el Solar Tracker
-    unsigned short _minutosEspera = 5;  // Minutos de espera para guardar los datos en la tarjeta SD
+    uint8_t _minutosEspera = 5;  // Minutos de espera para guardar los datos en la tarjeta SD
 
     bool _estadoSD; // Estado de la tarjeta SD
 
     // Nombres de los ficheros
-    const char _fichDatos[] = "datos.txt";  // nombre de fichero para guardar los datos del Solar Tracker
-    const char _fichConfig[] = "config.txt" // nombre del fichero para guardar la configuración del Solar Tracker
+    static constexpr const char* _fichDatos = "datos.txt";  // nombre de fichero para guardar los datos del Solar Tracker
+    static constexpr const char* _fichConfig = "config.txt"; // nombre del fichero para guardar la configuración del Solar Tracker
 
     
     bool loadConfig(); // Carga la configuración del Solar Tracker desde la tarjeta SD
 
-    bool updateConfigFile(); // Actualiza la configuración del Solar Tracker en la tarjeta SD
+    bool updateConfigFile(uint8_t minutosEspera, String lugarFisico); // Actualiza la configuración del Solar Tracker en la tarjeta SD
 
     String _getJSON (DateTime fecha_hora, float amperaje, float voltaje, float potencia);
 

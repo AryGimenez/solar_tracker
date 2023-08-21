@@ -3,7 +3,7 @@
 // public ---------------------------------------
 
 // Constructor de la clase que recibe el pin de selección del chip para la tarjeta SD
-SDCard::SDCard(unsigned shrt chipSelectPin) : _chipSelectPin(chipSelectPin) {}
+SDCard::SDCard(uint8_t chipSelectPin) : _chipSelectPin(chipSelectPin) {}
 
 // Inicialización de la tarjeta SD y el sistema de archivos
 bool SDCard::begin() {
@@ -27,21 +27,21 @@ String SDCard::getLugarFisico() {
 // en la tarjeta SD 
 bool SDCard::setLugarFisico(String lugarFisico){
     _lugarFisico = lugarFisico;
-    return SDCard.updateConfigFile(_minutosEspera, lugarFisico);
+    return updateConfigFile(_minutosEspera, lugarFisico);
 }
 
 // Retorna el tiempo de espera entre mediciones
-unsignd short SDCard::getMinutosEspera() {
+uint8_t SDCard::getMinutosEspera() {
     return _minutosEspera;
 }
 
-bool SDCard::setMinutosEspera(unsigned short minutosEspera) {
-    unsigned short _minutosEspera = minutosEspera;
-    return SDCard.updateConfigFile(minutosEspera, _lugarFisico);
+bool SDCard::setMinutosEspera(uint8_t minutosEspera) {
+    _minutosEspera = minutosEspera;
+    return updateConfigFile(minutosEspera, _lugarFisico);
 }
 
 // Escribir datos en un archivo existente en la tarjeta SD
-bool SDCard::writeToFile(DateTime fecha_hora, float amperaje, float voltaje, float potencia){
+bool SDCard::guardarDatos(DateTime fecha_hora, float amperaje, float voltaje, float potencia){
     File file = SD.open(_fichDatos, FILE_WRITE); // Abrir el archivo en modo escritura
     if (file) {
         file.println(SDCard::_getJSON(fecha_hora, amperaje, voltaje, potencia)); // Escribir los datos en el archivo
@@ -74,8 +74,8 @@ bool SDCard::loadConfig () {
         }
 
         // Obtener los datos del JSON
-        _minutosEspera = jsonDocument["minutos_espera"];
-        _lugarFisico = jsonDocument["lugar_fisico"];
+        _minutosEspera = jsonDocument["minutos_espera"].as<uint8_t>();
+        _lugarFisico = jsonDocument["lugar_fisico"].as<String>();
 
         // Cerrar el archivo después de leerlo
         file.close();
@@ -88,7 +88,7 @@ bool SDCard::loadConfig () {
     }
 }
 
-bool SDCard::updateConfigFile(unsigned short minutosEspera, String lugarFisico) {
+bool SDCard::updateConfigFile(uint8_t minutosEspera, String lugarFisico) {
     // Abrir el archivo en modo escritura
     File file = SD.open (_fichConfig, FILE_WRITE);
     
@@ -106,7 +106,6 @@ bool SDCard::updateConfigFile(unsigned short minutosEspera, String lugarFisico) 
         // Escribir el objeto JSON en el archivo
         if (serializeJson(jsonDocument, file) == 0) {
             file.close();
-            _
             return false; // Falló la escritura del JSON en el archivo
         }
 
@@ -138,7 +137,7 @@ String SDCard::_getJSON(DateTime fecha_hora, float amperaje, float voltaje, floa
   char buffer[256];
   
   // Serializamos el objeto JSON en el buffer
-  size_t bytes_written = serializeJson(jsonDocument, buffer, sizeof(buffer));
+  serializeJson(jsonDocument, buffer, sizeof(buffer));
 
   // Creamos un String a partir del buffer
   String jsonString(buffer);

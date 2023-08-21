@@ -1,12 +1,12 @@
 #include "SensorVAI.h"
 
 // Constructor de la clase que recibe los pines de los sensores
-SensorVAI::SensorVAI(unsigned short sensorAmperajePIN, unsigned short sensorVoltajePIN) 
-    : _sensorAmperajePIN(sensorAmperajePIN), _sensorVoltajePIN(sensorVoltajePIN) {
-    // Inicialización de variables privadas
-    _voltaje = 0;
-    _amperaje = 0;
-    _potencia = 0;
+SensorVAI::SensorVAI(uint8_t sensorAmperajePIN, 
+                    uint8_t sensorVoltajePIN) 
+                    : 
+                    _sensorAmperajePIN(sensorAmperajePIN), 
+                    _sensorVoltajePIN(sensorVoltajePIN) {
+
 }
 
 void SensorVAI::begin() {

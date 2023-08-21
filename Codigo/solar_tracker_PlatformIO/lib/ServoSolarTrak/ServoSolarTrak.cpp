@@ -1,11 +1,27 @@
 #include "ServoSolarTrak.h"
 
-// Constructor de la clase, que inicializa los pines de los servomotores
-ServoSolarTrak::ServoSolarTrak(int verticalPin, int horizontalPin)
-{
-    _servoVerticalPin = verticalPin;
-    _servoHorizontalPin = horizontalPin;
-}
+// Constructor de la clase `ServoSolarTrak`.
+// Este método inicializa las variables miembro con los valores de los pines proporcionados.
+ServoSolarTrak::ServoSolarTrak(uint8_t verticalPin,           // Pin del servo vertical
+                               uint8_t horizontalPin,         // Pin del servo horizontal
+                               uint8_t ldrUpPin,              // Pin del sensor LDR superior
+                               uint8_t ldrDownPin,            // Pin del sensor LDR inferior
+                               uint8_t ldrRightPin,           // Pin del sensor LDR derecho
+                               uint8_t ldrLeftPin,            // Pin del sensor LDR izquierdo
+                               uint8_t joystickVerticalPin,   // Pin vertical del joystick
+                               uint8_t joystickHorizontalPin) // Pin horizontal del joystick
+
+    // Inicialización de las variables miembro usando la lista de inicialización.
+    : _servoVerticalPin(verticalPin), 
+      _servoHorizontalPin(horizontalPin),
+      _ldr_up_pin(ldrUpPin),
+      _ldr_down_pin(ldrDownPin),
+      _ldr_right_pin(ldrRightPin),
+      _ldr_left_pin(ldrLeftPin),
+      _joystick_vertical_pin(joystickVerticalPin),
+      _joystick_horizontal_pin(joystickHorizontalPin)
+{}
+
 
 // Inicialización de los pines de los servomotores
 void ServoSolarTrak::attach()
@@ -22,14 +38,14 @@ void ServoSolarTrak::detach()
 }
 
 // Establece el ángulo del servomotor vertical
-void ServoSolarTrak::setVerticalAngle(int angle)
+void ServoSolarTrak::setVerticalAngle(uint8_t angle)
 {
     angle = constrain(angle, 0, 180);
     _servoVertical.write(angle);
 }
 
 // Establece el ángulo del servomotor horizontal
-void ServoSolarTrak::setHorizontalAngle(int angle)
+void ServoSolarTrak::setHorizontalAngle(uint8_t angle)
 {
     angle = constrain(angle, 0, 180);
     _servoHorizontal.write(angle);
@@ -59,19 +75,19 @@ void ServoSolarTrak::upgradeServo()
         break;
     case 2: // Modo Motor Horizontal
         ServoSolarTrak::_upgradeJoystickVertical();
-        ServoSolarTrak::_upgradeLDRH();
+        ServoSolarTrak::_upgradeLDRHorizontal();
         break;
     case 3: // Modo Automatico
-        ServoSolarTrak::_upgradeLDRH();
-        break
+        ServoSolarTrak::_upgradeLDR();
+        break;
     }
 }
 
 // Modifica el los Ángulos de los servos utilizando el Joystick Arduino KY 023
 void ServoSolarTrak::_upgradeJoystick()
 {
-    int valX = analogRead(_JOYSTICK_HORISONTAL_PIN);
-    int valY = analogRead(_JOYSTICK_VERTICAL_PIN);
+    int valX = analogRead(_joystick_horizontal_pin);
+    int valY = analogRead(_joystick_vertical_pin);
 
     int Valor_Xmax = 1023; // Constante del valor máximo para X
     int Valor_Xmin = 0;    // Constante del valor mínimo para X
@@ -112,7 +128,7 @@ void ServoSolarTrak::_upgradeJoystick()
 void ServoSolarTrak::_upgradeJoystickVertical()
 {
 
-    int valY = analogRead(_JOYSTICK_VERTICAL_PIN);
+    int valY = analogRead(_joystick_vertical_pin);
 
     int Valor_Ymax = 1023; // Constante del valor máximo para Y
     int Valor_Ymin = 0;    // Constante del valor mínimo para Y
@@ -132,34 +148,33 @@ void ServoSolarTrak::_upgradeJoystickVertical()
     
     int mappedY = map(valY, Valor_Ymin, Valor_Ymax, 0, 180);
 
-    setHorizontalAngle(mappedX);
     setVerticalAngle(mappedY);
 }
 
 // Modifica los angulos de los servos utilizando las fotoreistencias LDR
-void ServoSolarTrak::_upgredeLDR()
+void ServoSolarTrak::_upgradeLDR()
 {
     // Realizar el seguimiento automático en ambos ejes
-    int ldrUpValue = analogRead(_LDR_UP_PIN);
-    int ldrDownValue = analogRead(_LDR_DOWN_PIN);
-    int ldrRightValue = analogRead(_LDR_RIGHT_PIN);
-    int ldrLeftValue = analogRead(_LDR_LEFT_PIN);
+    int ldrUpValue = analogRead(_ldr_up_pin);
+    int ldrDownValue = analogRead(_ldr_down_pin);
+    int ldrRightValue = analogRead(_ldr_right_pin);
+    int ldrLeftValue = analogRead(_ldr_left_pin);
 
-    int verticalAngle = map(ldrUpValue - ldrDownValue, -_LDR_MAX, _LDR_MAX, _VERTICAL_MIN_ANGLE, _VERTICAL_MAX_ANGLE);
-    int horizontalAngle = map(ldrLeftValue - ldrRightValue, _LDR_MAX, _LDR_MAX, _HORIZONTAL_MIN_ANGLE, _HORIZONTAL_MAX_ANGLE);
+    int verticalAngle = map(ldrUpValue - ldrDownValue, -_ldr_max, _ldr_max, _vertical_min_angle, _vertical_max_angle);
+    int horizontalAngle = map(ldrLeftValue - ldrRightValue, _ldr_max, _ldr_max, _horizontal_min_angle, _horizontal_max_angle);
 
-    servoVertical.write(verticalAngle);
-    servoHorizontal.write(horizontalAngle);
+    _servoVertical.write(verticalAngle);
+    _servoHorizontal.write(horizontalAngle);
 }
 
 // Modifica el angulo del servo vertical utilizando las fotoreistencias LDR
-void ServoSolarTrak::_upbradeLDRHorisontal()
+void ServoSolarTrak::_upgradeLDRHorizontal()
 {
     // Realizar el seguimiento automático en ambos ejes
-    int ldrRightValue = analogRead(_LDR_RIGHT_PIN);
-    int ldrLeftValue = analogRead(_LDR_LEFT_PIN);
+    int ldrRightValue = analogRead(_ldr_right_pin);
+    int ldrLeftValue = analogRead(_ldr_left_pin);
 
-    int horizontalAngle = map(ldrLeftValue - ldrRightValue, _LDR_MAX, _LDR_MAX, _HORIZONTAL_MIN_ANGLE, _HORIZONTAL_MAX_ANGLE);
+    int horizontalAngle = map(ldrLeftValue - ldrRightValue, _ldr_max, _ldr_max, _horizontal_min_angle, _horizontal_max_angle);
 
-    servoHorizontal.write(horizontalAngle);
+    _servoHorizontal.write(horizontalAngle);
 }

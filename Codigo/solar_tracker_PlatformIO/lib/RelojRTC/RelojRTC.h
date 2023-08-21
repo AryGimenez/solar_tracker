@@ -3,14 +3,15 @@
 
 #include <Arduino.h>
 #include <RTClib.h>
+#include <TimeLib.h>
 
 class RelojRTC {
 public:
   RelojRTC();
   void begin();
-  void actualizar();
+
   DateTime getFechaHora();
-  String getFechaHoraString();
+  
   // Método para establecer una nueva fecha y hora en el módulo RTC
   void setFechaHora(DateTime fechaHora);
   // Método para establecer una nueva fecha y hora en el módulo RTC
@@ -21,7 +22,10 @@ public:
   // Verificar si han pasado suficientes minutos desde la última actualización
   bool hanPasadoMinutos();
   // Reiniciar el contador de minutos
-  void resetPasadoMinutos()
+  void resetPasadoMinutos();
+
+  // Retorna el estado del módulo RTC
+  bool getEstadoRTC();
 
 private:
     // Verificar si han pasado suficientes minutos desde la última actualización
@@ -34,9 +38,9 @@ private:
     // Variable para almacenar 
     bool _hanPasadoMinutos = false;
     
-    const bool _estadoRTC = true; // Estado del módulo de reloj Tiny RTC (true = Funciona, false = No funciona)
+    bool _estadoRTC = true; // Estado del módulo de reloj Tiny RTC (true = Funciona, false = No funciona)
     //Led Advertencia
-    const int _esperaMinutos = 5; // Espera en mitutos para guardar los datos en la tarjeta SD
+    uint8_t _esperaMinutos = 5; // Espera en mitutos para guardar los datos en la tarjeta SD
 };
 
 #endif
