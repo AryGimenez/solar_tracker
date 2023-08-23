@@ -6,26 +6,15 @@ RelojRTC::RelojRTC(){
 }
 
 // Inicialización del módulo RTC y ajuste de la fecha y hora si no está en funcionamiento
-void RelojRTC::begin() {
+bool RelojRTC::begin() {
 
-  // Inicializar el módulo RTC
+  // Inicialización del módulo RTC
   _moduloRelojRTC.begin();
-
-  if (_moduloRelojRTC.lostPower()) {
-    _estadoRTC = true;
-    _fechaHora = _moduloRelojRTC.now();
-  }else{
-    _estadoRTC = false;
-    // Ajustar  la fecha y hora por defecto
-    _fechaHora = DateTime(1988, 2, 29, 0, 0, 0);
-    // Establecer fecha microcontrolador
-    setTime(_fechaHora.hour(), _fechaHora.minute(), _fechaHora.second(), _fechaHora.day(), _fechaHora.month(), _fechaHora.year());
-  }
-  _fechaDisparador = _fechaHora;
+  return update();
 }
 
 // Actualiza la fecha y hora almacenadas en el RelojRTC
-void RelojRTC::actualizar() {
+bool RelojRTC::update() {
   
   if (_moduloRelojRTC.lostPower()) {
     _estadoRTC = true;
@@ -60,6 +49,8 @@ void RelojRTC::setFechaHora(int year, int month, int day, int hour, int minute, 
 }
 
 
+
+
 // Verificar si han pasado suficientes minutos desde la última actualización
 bool RelojRTC::hanPasadoMinutos() {
 
@@ -78,6 +69,15 @@ bool RelojRTC::hanPasadoMinutos() {
 void RelojRTC::resetPasadoMinutos() {
   _fechaDisparador = _fechaHora;
 }
+
+
+  /**
+   *  Modifica el los minutos de espera para determinar si han pasado suficientes minutos desde la última actualización.
+  */
+  void RelojRTC::setEsperaMinutos(uint8_t esperaMinutos){
+    _esperaMinutos = esperaMinutos;
+    resetPasadoMinutos();
+  }
 
 
 

@@ -4,15 +4,16 @@ PantallaOLED::PantallaOLED() : _display(_ANCHO_PANTALLA, _ALTO_PANTALLA, &Wire, 
 }
 
 
-void PantallaOLED::begin() {
+bool PantallaOLED::begin() {
     // Inicializamos la pantalla OLED 
     if (_display.begin(SSD1306_SWITCHCAPVCC, _DireccionPantalla)){
-        _errorPantalla = false;
+        _estadoPantalla = true;
         _display.clearDisplay();
         _display.display();
     }else{
-        _errorPantalla = true;
+        _estadoPantalla = false;
     }
+    return _estadoPantalla;
     
 }
 

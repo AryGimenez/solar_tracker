@@ -7,15 +7,13 @@ SDCard::SDCard(uint8_t chipSelectPin) : _chipSelectPin(chipSelectPin) {}
 
 // Inicialización de la tarjeta SD y el sistema de archivos
 bool SDCard::begin() {
-    if (SD.begin(_chipSelectPin)) {
-        _estadoSD = true; // Se ha inicializado correctamente la tarjeta SD
-        return true; // Se ha inicializado correctamente la tarjeta SD
+    if (SD.begin(_chipSelectPin)){
+        _estadoSD = loadConfig(); // Cargar la configuración del Solar Tracker desde la tarjeta SD
 
-    } else {
-
+    }else
         _estadoSD = false; // No se ha inicializado correctamente la tarjeta SD
-        return false; // Fallo en la inicializarían de la tarjeta SD
-    }
+
+    return _estadoSD; // Fallo en la inicializarían de la tarjeta SD
 }
 
 // Retorna el lugar físico donde se encuentra el Solar Tracker

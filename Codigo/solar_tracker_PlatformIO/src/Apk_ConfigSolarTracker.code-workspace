@@ -1,0 +1,25 @@
+{
+	"folders": [
+		{
+			"path": "../../Apk_ConfigSolarTracker"
+		},
+		{
+			"name": "solar_tracker_PlatformIO",
+			"path": ".."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"array": "cpp",
+			"deque": "cpp",
+			"string": "cpp",
+			"unordered_map": "cpp",
+			"vector": "cpp",
+			"string_view": "cpp",
+			"initializer_list": "cpp",
+			"*.tcc": "cpp",
+			"memory": "cpp",
+			"random": "cpp"
+		}
+	}
+}

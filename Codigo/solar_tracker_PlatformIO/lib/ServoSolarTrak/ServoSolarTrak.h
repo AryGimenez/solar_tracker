@@ -9,8 +9,8 @@ class ServoSolarTrak {
 public:
 
     // Constructor que inicializa los pines de los servomotores y sensores.
-    ServoSolarTrak(uint8_t verticalPin,               // Pin del servo vertical
-                   uint8_t horizontalPin,             // Pin del servo horizontal
+    ServoSolarTrak(uint8_t verticalPin,              // Pin del servo vertical
+                   uint8_t horizontalPin,            // Pin del servo horizontal
                    uint8_t ldrUpPin,                 // Pin del sensor LDR superior
                    uint8_t ldrDownPin,               // Pin del sensor LDR inferior
                    uint8_t ldrRightPin,              // Pin del sensor LDR derecho
@@ -19,7 +19,11 @@ public:
                    uint8_t joystickHorizontalPin);   // Pin horizontal del joystick
 
 
-    void attach(); // Inicialización de los pines de los servos
+    /**
+     * @brief Inicializa los pines y la configuración de los servomotores, 
+     * fotorresistencias LDR y joystick.
+     */
+    void begin(); 
     void detach(); // Detener los servos
     void setVerticalAngle(uint8_t angle); // Establecer el ángulo vertical del servo
     void setHorizontalAngle(uint8_t angle); // Establecer el ángulo horizontal del servo

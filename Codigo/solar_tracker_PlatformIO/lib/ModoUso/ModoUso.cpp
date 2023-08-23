@@ -17,8 +17,12 @@ ModoUso::ModoUso(
     _ledModoAutomaticoPIN(ledModoAutomaticoPIN)    // Inicialización de la variable miembro para el PIN del LED de modo automático
 {}
 
-// Método para inicializar los pines y los botones
-void ModoUso::attach()
+/**
+ * @brief Inicializa los pines, botones y LEDs. 
+ * Una vez inicializado, el LED asociado con _ledModoManualPIN se enciende, 
+ * indicando el modo manual activo.
+ */
+void ModoUso::begin()
 {
     // Inicializar los pines de los botones como entrada con resistencias pull-up internas
     pinMode(_btnModoManualPIN, INPUT_PULLUP);
@@ -74,7 +78,7 @@ void ModoUso::upgradeLEDs()
 
 // ... (otros métodos de la clase)
 
-unsigned char ModoUso::getModoFuncionamiento()
+uint8_t ModoUso::getModoFuncionamiento()
 {
     return _modoFuncionamiento;
 }

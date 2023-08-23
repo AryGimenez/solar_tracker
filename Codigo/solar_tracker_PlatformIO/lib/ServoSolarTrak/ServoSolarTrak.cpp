@@ -22,12 +22,30 @@ ServoSolarTrak::ServoSolarTrak(uint8_t verticalPin,           // Pin del servo v
       _joystick_horizontal_pin(joystickHorizontalPin)
 {}
 
-
-// Inicialización de los pines de los servomotores
-void ServoSolarTrak::attach()
+/**
+ * @brief Inicializa los pines y la configuración de los servomotores, 
+ * fotorresistencias LDR y joystick.
+ */
+void ServoSolarTrak::begin()
 {
-    _servoVertical.attach(_servoVerticalPin);
-    _servoHorizontal.attach(_servoHorizontalPin);
+    // Inicialización de los servos
+    _servoVertical.attach(_servoVerticalPin); // Asociar el pin del servo vertical
+    _servoHorizontal.attach(_servoHorizontalPin); // Asociar el pin del servo horizontal
+    
+    // Establecer los servos en un ángulo inicial (puede cambiar esto según tus necesidades)
+    _servoVertical.write(90); // Poner el servo vertical en posición neutral (90 grados)
+    _servoHorizontal.write(90); // Poner el servo horizontal en posición neutral (90 grados)
+
+    // Configuración de los pines de las fotorresistencias LDR como entrada
+    pinMode(_ldr_up_pin, INPUT);
+    pinMode(_ldr_down_pin, INPUT);
+    pinMode(_ldr_right_pin, INPUT);
+    pinMode(_ldr_left_pin, INPUT);
+    
+    // Configuración de los pines del joystick como entrada
+    pinMode(_joystick_vertical_pin, INPUT);
+    pinMode(_joystick_horizontal_pin, INPUT);
+
 }
 
 // Detiene los Servomotores
@@ -133,7 +151,7 @@ void ServoSolarTrak::_upgradeJoystickVertical()
     int Valor_Ymax = 1023; // Constante del valor máximo para Y
     int Valor_Ymin = 0;    // Constante del valor mínimo para Y
 
-    bool flag = false; // Banint mappedX = map(valX, Valor_Xmin, Valor_Xmax, 0, 180);dera para saber si se ha movido el joystick
+    // bool flag = false; // Banint mappedX = map(valX, Valor_Xmin, Valor_Xmax, 0, 180);dera para saber si se ha movido el joystick
 
     if (valY > 511)
     {                                   // Movimiento del eje Y hacia Arriba partiendo del centro (valor de 511)
