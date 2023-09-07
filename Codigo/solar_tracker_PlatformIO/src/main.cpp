@@ -88,6 +88,6 @@ void loop() {
         _controladorSdCar.guardarDatos(_relojRTC.getFechaHora(), _sensorVAI.getAmperaje(), _sensorVAI.getVoltaje(), _sensorVAI.getPotencia());
         _relojRTC.resetPasadoMinutos();                                 // Reinicia el contador de minutos
     }
-    _estadoPantalla = _pantallaOLED.update(_relojRTC.getFechaHora(), _sensorVAI.getAmperaje(), _sensorVAI.getVoltaje(), _sensorVAI.getPotencia()); // Actualiza la pantalla OLED
+    _estadoPantalla = _pantallaOLED.actualizarPantalla();
 
 }
