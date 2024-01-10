@@ -1,0 +1,113 @@
+#include <Servo.h>
+
+// Declaraciones de constantes para los pines
+const int PIN_BTNModoManual = 2;          // Botón para el modo manual
+const int PIN_LEDModoManual = 7;          // LED para el modo manual
+const int PIN_BTNModoAutomatico = 4;      // Botón para el modo automático
+const int PIN_LEDModoAutomatico = 8;      // LED para el modo automático
+
+// Pines del joystick
+const int PIN_JoystickX = A4;             // Pin para el eje X del joystick
+const int PIN_JoystickY = A5;             // Pin para el eje Y del joystick
+
+// Pines para los sensores LDR
+const int PIN_LDR_Arriba = A0;            // Pin para el LDR de "Arriba"
+const int PIN_LDR_Izquierda = A3;         // Pin para el LDR de "Izquierda"
+const int PIN_LDR_Abajo = A2;             // Pin para el LDR de "Abajo"
+const int PIN_LDR_Derecha = A1;           // Pin para el LDR de "Derecha"
+
+// Pines para los sensores de amperaje y voltaje
+const int PIN_SensorAmperaje = A6;        // Pin para el sensor de amperaje
+const int PIN_SensorVoltaje = A7;         // Pin para el sensor de voltaje
+
+// Declaraciones para los servos
+Servo servoHorizontal;
+Servo servoVertical;
+
+// Variables Globales
+bool modoManualActivo = true;             // Indica si el modo manual está activo
+
+// Variables para guardar mediciones de amperaje y voltaje
+float currentAmperage = 0.0;
+float currentVoltage = 0.0;
+
+// Configuración inicial
+void setup() {
+  Serial.begin(9600);
+  inicializarPines();
+  inicializarServos();
+}
+
+// Loop principal
+void loop() {
+  actualizarModo();
+  if (modoManualActivo) {
+    controlarServosConJoystick();
+  } else {
+    controlarServosConLDR();
+  }
+  leerSensores();
+  mostrarDatos();
+}
+
+// Funciones de configuración y utilidad
+void inicializarPines() {
+  pinMode(PIN_BTNModoManual, INPUT);
+  pinMode(PIN_LEDModoManual, OUTPUT);
+  pinMode(PIN_BTNModoAutomatico, INPUT);
+  pinMode(PIN_LEDModoAutomatico, OUTPUT);
+  digitalWrite(PIN_LEDModoManual, HIGH);  // Enciende el LED del modo manual por defecto
+}
+
+void inicializarServos() {
+  servoHorizontal.attach(11);             // Adjunta el servo horizontal al pin 11
+  servoVertical.attach(10);               // Adjunta el servo vertical al pin 10
+  servoHorizontal.write(180);             // Posición inicial del servo horizontal
+  servoVertical.write(180);               // Posición inicial del servo vertical
+}
+
+void actualizarModo() {
+  if (digitalRead(PIN_BTNModoManual) == HIGH) {
+    modoManualActivo = true;
+    digitalWrite(PIN_LEDModoManual, HIGH);
+    digitalWrite(PIN_LEDModoAutomatico, LOW);
+  } else if (digitalRead(PIN_BTNModoAutomatico) == HIGH) {
+    modoManualActivo = false;
+    digitalWrite(PIN_LEDModoAutomatico, HIGH);
+    digitalWrite(PIN_LEDModoManual, LOW);
+  }
+}
+
+void controlarServosConJoystick() {
+  // Aquí el código para mover los servos con el joystick
+}
+
+void controlarServosConLDR() {
+  // Aquí el código para mover los servos con los sensores LDR
+}
+
+void leerSensores() {
+  leerAmperaje();
+  leerVoltaje();
+}
+
+void leerAmperaje() {
+  int sensorValue = analogRead(PIN_SensorAmperaje);
+  float voltage = (sensorValue * 5.0) / 1023.0;
+  currentAmperage = (voltage - 2.5) / 0.185;
+}
+
+void leerVoltaje() {
+  int sensorValue = analogRead(PIN_SensorVoltaje);
+  currentVoltage = sensorValue * (5.0 / 1023.0) * 5 * 0.927;
+}
+
+void mostrarDatos() {
+  Serial.print("Amperaje: ");
+  Serial.print(currentAmperage);
+  Serial.print(" A, Voltaje: ");
+  Serial.print(currentVoltage);
+  Serial.println(" V");
+}
+
+// Pued
