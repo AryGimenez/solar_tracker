@@ -8,9 +8,7 @@ const int PIN_LEDModoAutomatico = 8;      // LED para el modo automático
 
 // Pines del joystick
 const int PIN_JoystickX = A4;             // Pin para el eje X del joystick
-const int PIN_JoystickY = A5;             // Pin para el eje Y del joystick
-
-// Pines para los sensores LDR
+const int PIN_JoystickY = A5;             // Pin para el eje Y del joystick// Pines para los sensores LDR
 const int PIN_LDR_Arriba = A0;            // Pin para el LDR de "Arriba"
 const int PIN_LDR_Izquierda = A3;         // Pin para el LDR de "Izquierda"
 const int PIN_LDR_Abajo = A2;             // Pin para el LDR de "Abajo"
@@ -65,11 +63,11 @@ void inicializarServos() {
   servoHorizontal.write(180);             // Posición inicial del servo horizontal
   servoVertical.write(180);               // Posición inicial del servo vertical
 }
-
+// revisar 
 void actualizarModo() {
   if (digitalRead(PIN_BTNModoManual) == HIGH) {
     modoManualActivo = true;
-    digitalWrite(PIN_LEDModoManual, HIGH);
+    digitalWrite(PIN_LEDModoManual, HIGH); //  ensiende led modo modo manual
     digitalWrite(PIN_LEDModoAutomatico, LOW);
   } else if (digitalRead(PIN_BTNModoAutomatico) == HIGH) {
     modoManualActivo = false;
@@ -80,6 +78,34 @@ void actualizarModo() {
 
 void controlarServosConJoystick() {
   // Aquí el código para mover los servos con el joystick
+ 
+
+}
+
+void moverServo(bool Horizontal, int grados){
+ 
+  miServo.attach(10);  // Adjunta el servo al pin D10
+  miServo.write(180);  // Mueve el servo a la posición 180 grados al inicio
+  Serial.println("Ingrese el angulo y presione enviar:");
+}
+
+void loop() {
+  if (Serial.available() > 0) {  // Chequea si hay datos disponibles para leer en la terminal serial
+    angulo = Serial.parseInt();  // Lee el ángulo enviado
+
+    // Ignora lecturas no válidas (como 0 que puede ser un carácter residual)
+    if (angulo > 0 && angulo <= 180) {
+      Serial.println("El angulo que ingresé fue: " + String(angulo));
+      miServo.write(angulo);  // Mueve el servo al ángulo deseado
+    }
+
+    delay(1000);  // Espera un poco antes de leer el siguiente ángulo
+    while (Serial.available() > 0) {
+      char t = Serial.read(); // Limpia cualquier caracter residual en el buffer
+    }
+    Serial.println("Mueva a otro ángulo:");
+  }
+}
 }
 
 void controlarServosConLDR() {
