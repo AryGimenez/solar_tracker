@@ -19,8 +19,11 @@ const int PIN_SensorAmperaje = A6;        // Pin para el sensor de amperaje
 const int PIN_SensorVoltaje = A7;         // Pin para el sensor de voltaje
 
 // Declaraciones para los servos
-Servo servoHorizontal;
-Servo servoVertical;
+Servo m_servoHorizontal;
+Servo m_servoVertical;}
+
+int m_ServoHorizontalPociicon 0;
+int m_ServoVerticalPociicon 0;
 
 // Variables Globales
 bool modoManualActivo = true;             // Indica si el modo manual está activo
@@ -82,12 +85,14 @@ void controlarServosConJoystick() {
 
 }
 
-void moverServo(bool Horizontal, int grados){
+void moverServo(bool p_Horizontal, int p_Grado){
  
-  miServo.attach(10);  // Adjunta el servo al pin D10
-  miServo.write(180);  // Mueve el servo a la posición 180 grados al inicio
-  Serial.println("Ingrese el angulo y presione enviar:");
-}
+ if (p_Horizontal){
+  m_servoHorizontal.write(p_Grado);
+ }else{
+  m_servoVertical.write(p_Grado);
+ }
+  
 
 void loop() {
   if (Serial.available() > 0) {  // Chequea si hay datos disponibles para leer en la terminal serial
