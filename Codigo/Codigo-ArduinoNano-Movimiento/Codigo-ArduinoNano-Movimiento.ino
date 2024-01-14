@@ -6,13 +6,16 @@ const int PIN_LEDModoManual = 7;          // LED para el modo manual
 const int PIN_BTNModoAutomatico = 4;      // Botón para el modo automático
 const int PIN_LEDModoAutomatico = 8;      // LED para el modo automático
 
-// Pines del joystick
+// Pines del joystick KY 023 🕹️
 const int PIN_JoystickX = A4;             // Pin para el eje X del joystick
 const int PIN_JoystickY = A5;             // Pin para el eje Y del joystick// Pines para los sensores LDR
-const int PIN_LDR_Arriba = A0;            // Pin para el LDR de "Arriba"
-const int PIN_LDR_Izquierda = A3;         // Pin para el LDR de "Izquierda"
-const int PIN_LDR_Abajo = A2;             // Pin para el LDR de "Abajo"
-const int PIN_LDR_Derecha = A1;           // Pin para el LDR de "Derecha"
+
+
+// Definición de los pines de las fotorresistencias 🌞
+const int PIN_LDR_Arriba = A0;            // ⬆️ - Pin para el LDR de "Arriba"
+const int PIN_LDR_Izquierda = A3;         // ➡️ - Pin para el LDR de "Izquierda" 
+const int PIN_LDR_Abajo = A2;             // ⬇️ - Pin para el LDR de "Abajo"
+const int PIN_LDR_Derecha = A1;           // ⬅️ - Pin para el LDR de "Derecha"
 
 // Pines para los sensores de amperaje y voltaje
 const int PIN_SensorAmperaje = A6;        // Pin para el sensor de amperaje
@@ -20,7 +23,7 @@ const int PIN_SensorVoltaje = A7;         // Pin para el sensor de voltaje
 
 // Declaraciones para los servos
 Servo m_servoHorizontal;
-Servo m_servoVertical;}
+Servo m_servoVertical;
 
 int m_ServoHorizontalPociicon 0;
 int m_ServoVerticalPociicon 0;
