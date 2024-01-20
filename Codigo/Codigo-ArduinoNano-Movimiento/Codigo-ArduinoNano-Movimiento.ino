@@ -25,8 +25,8 @@ const int PIN_SensorVoltaje = A7;         // Pin para el sensor de voltaje
 Servo m_servoHorizontal;
 Servo m_servoVertical;
 
-int m_ServoHorizontalPociicon 0;
-int m_ServoVerticalPociicon 0;
+int m_ServoHorizontalPociicon = 0;
+int m_ServoVerticalPociicon = 0;
 
 // Variables Globales
 bool modoManualActivo = true;             // Indica si el modo manual está activo
@@ -35,24 +35,12 @@ bool modoManualActivo = true;             // Indica si el modo manual está acti
 float currentAmperage = 0.0;
 float currentVoltage = 0.0;
 
-// Configuración inicial
-void setup() {
-  Serial.begin(9600);
-  inicializarPines();
-  inicializarServos();
+
+void controlarServosConLDR() {
+  // Aquí el código para mover los servos con los sensores LDR
 }
 
-// Loop principal
-void loop() {
-  actualizarModo();
-  if (modoManualActivo) {
-    controlarServosConJoystick();
-  } else {
-    controlarServosConLDR();
-  }
-  leerSensores();
-  mostrarDatos();
-}
+
 
 // Funciones de configuración y utilidad
 void inicializarPines() {
@@ -64,10 +52,10 @@ void inicializarPines() {
 }
 
 void inicializarServos() {
-  servoHorizontal.attach(11);             // Adjunta el servo horizontal al pin 11
-  servoVertical.attach(10);               // Adjunta el servo vertical al pin 10
-  servoHorizontal.write(180);             // Posición inicial del servo horizontal
-  servoVertical.write(180);               // Posición inicial del servo vertical
+  m_servoHorizontal.attach(11);             // Adjunta el servo horizontal al pin 11
+  m_servoVertical.attach(10);               // Adjunta el servo vertical al pin 10
+  m_servoHorizontal.write(180);             // Posición inicial del servo horizontal
+  m_servoVertical.write(180);               // Posición inicial del servo vertical
 }
 // revisar 
 void actualizarModo() {
@@ -95,30 +83,13 @@ void moverServo(bool p_Horizontal, int p_Grado){
  }else{
   m_servoVertical.write(p_Grado);
  }
-  
+} 
 
-void loop() {
-  if (Serial.available() > 0) {  // Chequea si hay datos disponibles para leer en la terminal serial
-    angulo = Serial.parseInt();  // Lee el ángulo enviado
 
-    // Ignora lecturas no válidas (como 0 que puede ser un carácter residual)
-    if (angulo > 0 && angulo <= 180) {
-      Serial.println("El angulo que ingresé fue: " + String(angulo));
-      miServo.write(angulo);  // Mueve el servo al ángulo deseado
-    }
 
-    delay(1000);  // Espera un poco antes de leer el siguiente ángulo
-    while (Serial.available() > 0) {
-      char t = Serial.read(); // Limpia cualquier caracter residual en el buffer
-    }
-    Serial.println("Mueva a otro ángulo:");
-  }
-}
-}
 
-void controlarServosConLDR() {
-  // Aquí el código para mover los servos con los sensores LDR
-}
+
+
 
 void leerSensores() {
   leerAmperaje();
@@ -143,5 +114,31 @@ void mostrarDatos() {
   Serial.print(currentVoltage);
   Serial.println(" V");
 }
+
+
+
+
+
+// Configuración inicial
+void setup() {
+  Serial.begin(9600);
+  inicializarPines();
+  inicializarServos();
+}
+
+
+// Loop principal
+void loop() {
+  actualizarModo();
+  if (modoManualActivo) {
+    controlarServosConJoystick();
+  } else {
+    controlarServosConLDR();
+  }
+  leerSensores();
+  mostrarDatos();
+}
+
+
 
 // Pued
