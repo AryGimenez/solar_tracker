@@ -22,11 +22,18 @@ const int PIN_SensorAmperaje = A6;        // Pin para el sensor de amperaje
 const int PIN_SensorVoltaje = A7;         // Pin para el sensor de voltaje
 
 // Declaraciones para los servos
+
+const int PIN_ServoHorizontal = 11;       // Pin para el servo horizontal
+const int PIN_ServoVertical = 10;         // Pin para el servo vertical
+
+
 Servo m_servoHorizontal;
 Servo m_servoVertical;
 
 int m_ServoHorizontalPociicon = 0;
 int m_ServoVerticalPociicon = 0;
+
+
 
 // Variables Globales
 bool modoManualActivo = true;             // Indica si el modo manual está activo
@@ -48,14 +55,17 @@ void inicializarPines() {
   pinMode(PIN_LEDModoManual, OUTPUT);
   pinMode(PIN_BTNModoAutomatico, INPUT);
   pinMode(PIN_LEDModoAutomatico, OUTPUT);
+
   digitalWrite(PIN_LEDModoManual, HIGH);  // Enciende el LED del modo manual por defecto
 }
 
 void inicializarServos() {
-  m_servoHorizontal.attach(11);             // Adjunta el servo horizontal al pin 11
-  m_servoVertical.attach(10);               // Adjunta el servo vertical al pin 10
-  m_servoHorizontal.write(180);             // Posición inicial del servo horizontal
-  m_servoVertical.write(180);               // Posición inicial del servo vertical
+  m_servoHorizontal.attach(PIN_ServoHorizontal);             // Adjunta el servo horizontal al pin 11
+  m_servoVertical.attach(PIN_BTNModoAutomatico);               // Adjunta el servo vertical al pin 10
+ 
+  // Estableser Posición inicial de los servos
+  // m_servoHorizontal.write(180);             // Posición inicial del servo horizontal
+  // m_servoVertical.write(180);               // Posición inicial del servo vertical
 }
 // revisar 
 void actualizarModo() {
@@ -71,24 +81,56 @@ void actualizarModo() {
 }
 
 void controlarServosConJoystick() {
-  // Aquí el código para mover los servos con el joystick
- 
+
+
+
+
+    int valorX = analogRead(PIN_JoystickX); // Lee el valor del eje X del joystick
+    int valorY = analogRead(PIN_JoystickY); // Lee el valor del eje Y del joystick
+
+      // Umbrales para el movimiento del joystick
+    int umbralInferior = 400; // Valor debajo del cual se mueve el servo hacia un extremo
+    int umbralSuperior = 600; // Valor por encima del cual se mueve el servo hacia el otro extremo
+
+
+
+    // Definir topes de movimiento para los servos !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+    // Movimiento Horizontal
+    if (valorX < umbralInferior) {
+        m_ServoHorizontalPociicon--; // Mueve hacia la izquierda
+    } else if (valorX > umbralSuperior) {
+        m_ServoHorizontalPociicon++; // Mueve hacia la derecha
+    }
+
+
+
+
+
+    // Movimiento Vertical
+    if (valorY < umbralInferior) {
+        m_ServoVerticalPociicon--; // Mueve hacia abajo
+    } else if (valorY > umbralSuperior) {
+        m_ServoVerticalPociicon++; // Mueve hacia arriba
+    }
+
+
+    // Prefiero Corroborarlo ante Eliminar
+
+    // // Restringe los valores de los servos a su rango permitido
+    // m_ServoHorizontalPociicon = constrain(m_ServoHorizontalPociicon, 0, 180);
+    // m_ServoVerticalPociicon = constrain(m_ServoVerticalPociicon, 0, 180);
+
+    // Mueve los servos a las nuevas posiciones
+    m_servoHorizontal.write(m_ServoHorizontalPociicon);
+    m_servoVertical.write(m_ServoVerticalPociicon);
 
 }
 
-void moverServo(bool p_Horizontal, int p_Grado){
- 
- if (p_Horizontal){
-  m_servoHorizontal.write(p_Grado);
- }else{
-  m_servoVertical.write(p_Grado);
- }
-} 
-
-
-
-
-
+void moverServo(){
+  m_servoHorizontal.write(m_ServoHorizontalPociicon);
+  m_servoVertical.write(m_ServoVerticalPociicon);
+}
 
 
 void leerSensores() {
