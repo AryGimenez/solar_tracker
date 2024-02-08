@@ -31,34 +31,87 @@ Servo m_servoHorizontal;
 Servo m_servoVertical;
 
 int m_ServoHorizontalPociicon = 0;
-int m_ServoVerticalPociicon = 0;
+int m_ServoVerticalPosicion = 0;
+
+// Definición de constantes para la calibración y los límites de movimiento del servo
+const int MIN_ANGLE = 0;
+const int MAX_ANGLE = 180;
+const int ANGLE_STEP = 5;
+
 
 
 
 // Variables Globales
-bool modoManualActivo = true;             // Indica si el modo manual está activo
+bool modoManualActivo = false;             // Indica si el modo manual está activo
 
 // Variables para guardar mediciones de amperaje y voltaje
 float currentAmperage = 0.0;
 float currentVoltage = 0.0;
 
 
+
+void moveVertical(int direction) {
+  // Calcula la nueva posición horizontal del servomotor, asegurándose de que esté dentro de los límites permitidos
+  int newVerticalPosition = constrain(m_ServoVerticalPosicion + direction * ANGLE_STEP, MIN_ANGLE, MAX_ANGLE);
+  servoVertical.write(newVerticalPosition);
+  m_ServoVerticalPosicion = newVerticalPosition;
+  Serial.print("Servo Vertical: ");
+  Serial.println(newVerticalPosition);
+}
+
+
+
+
 void controlarServosConLDR() {
   // Aquí el código para mover los servos con los sensores LDR
+  int valorLDRArriba = analogRead(PIN_LDR_Arriba);
+  int valorLDRDerecha = analogRead(PIN_LDR_Derecha);
+  int valorLDRAbajo = analogRead(PIN_LDR_Abajo);
+  int valorLDRIzquierda = analogRead(PIN_LDR_Izquierda);
+  
+    // Determinar la dirección de la luz más intensa
+  if (valorLDRArriba > valorLDRAbajo && 
+      valorLDRArriba > valorLDRDerecha && 
+      valorLDRArriba > valorLDRIzquierda) {
+    moveVertical(-1); // Mover hacia arriba
+  } else if (valorLDRAbajo > valorLDRArriba && valorLDRAbajo > valorLDRDerecha && valorLDRAbajo > valorLDRIzquierda) {
+    moveVertical(1); // Mover hacia abajo
+  } else if (valorLDRDerecha > valorLDRArriba && valorLDRDerecha > valorLDRAbajo && valorLDRDerecha > valorLDRIzquierda) {
+    moveHorizontal(1); // Mover hacia la derecha
+  } else if (valorLDRIzquierda > valorLDRArriba && valorLDRIzquierda > valorLDRAbajo && valorLDRIzquierda > valorLDRDerecha) {
+    moveHorizontal(-1); // Mover hacia la izquierda
+  }
+}
+
+
+
+void verificarSensoresLDR() {
+  // Leer los valores analógicos de los sensores LDR
+  int valorLDRArriba = analogRead(PIN_LDR_Arriba);
+  int valorLDRDerecha = analogRead(PIN_LDR_Derecha);
+  int valorLDRAbajo = analogRead(PIN_LDR_Abajo);
+  int valorLDRIzquierda = analogRead(PIN_LDR_Izquierda);
+  
+  // Imprimir los valores leídos
+  Serial.println("Valor LDR Arriba: " + String(valorLDRArriba));
+  Serial.println("Valor LDR Derecha: " + String(valorLDRDerecha));
+  Serial.println("Valor LDR Abajo: " + String(valorLDRAbajo));
+  Serial.println("Valor LDR Izquierda: " + String(valorLDRIzquierda));
 }
 
 
 
 // Funciones de configuración y utilidad
-void inicializarPines() {
+void inicializarPinesModoUso() {
   pinMode(PIN_BTNModoManual, INPUT);
   pinMode(PIN_LEDModoManual, OUTPUT);
   pinMode(PIN_BTNModoAutomatico, INPUT);
   pinMode(PIN_LEDModoAutomatico, OUTPUT);
 
-  digitalWrite(PIN_LEDModoManual, HIGH);  // Enciende el LED del modo manual por defecto
+  // digitalWrite(PIN_LEDModoManual, HIGH);  // Enciende el LED del modo manual por defecto
+  digitalWrite(PIN_LEDModoAutomatico, HIGH);
 }
-
+// Función para inicializar los servos
 void inicializarServos() {
   m_servoHorizontal.attach(PIN_ServoHorizontal);             // Adjunta el servo horizontal al pin 11
   m_servoVertical.attach(PIN_BTNModoAutomatico);               // Adjunta el servo vertical al pin 10
@@ -67,6 +120,16 @@ void inicializarServos() {
   // m_servoHorizontal.write(180);             // Posición inicial del servo horizontal
   // m_servoVertical.write(180);               // Posición inicial del servo vertical
 }
+
+void iniciarSensorLDR() {
+  pinMode(PIN_LDR_Arriba, INPUT);
+  pinMode(PIN_LDR_Izquierda, INPUT);
+  pinMode(PIN_LDR_Abajo, INPUT);
+  pinMode(PIN_LDR_Derecha, INPUT);
+}
+
+
+
 // revisar 
 void actualizarModo() {
   if (digitalRead(PIN_BTNModoManual) == HIGH) {
@@ -81,10 +144,6 @@ void actualizarModo() {
 }
 
 void controlarServosConJoystick() {
-
-
-
-
     int valorX = analogRead(PIN_JoystickX); // Lee el valor del eje X del joystick
     int valorY = analogRead(PIN_JoystickY); // Lee el valor del eje Y del joystick
 
@@ -102,10 +161,6 @@ void controlarServosConJoystick() {
     } else if (valorX > umbralSuperior) {
         m_ServoHorizontalPociicon++; // Mueve hacia la derecha
     }
-
-
-
-
 
     // Movimiento Vertical
     if (valorY < umbralInferior) {
@@ -127,10 +182,10 @@ void controlarServosConJoystick() {
 
 }
 
-void moverServo(){
-  m_servoHorizontal.write(m_ServoHorizontalPociicon);
-  m_servoVertical.write(m_ServoVerticalPociicon);
-}
+//void moverServo(){
+//  m_servoHorizontal.write(m_ServoHorizontalPociicon);
+//  m_servoVertical.write(m_ServoVerticalPociicon);
+//}
 
 
 void leerSensores() {
@@ -164,21 +219,30 @@ void mostrarDatos() {
 // Configuración inicial
 void setup() {
   Serial.begin(9600);
-  inicializarPines();
+  inicializarPinesModoUso();
   inicializarServos();
+  iniciarSensorLDR(); 
+  // mostrarDatos();
 }
 
 
 // Loop principal
 void loop() {
-  actualizarModo();
-  if (modoManualActivo) {
-    controlarServosConJoystick();
-  } else {
-    controlarServosConLDR();
-  }
-  leerSensores();
-  mostrarDatos();
+  verificarSensoresLDR();
+   
+
+ // actualizarModo();
+ // if (modoManualActivo) {
+ //   controlarServosConJoystick();
+ //  } else {
+ //   controlarServosConLDR();
+ // }
+ 
+ 
+ // leerSensores();
+ // mostrarDatos();
+
+
 }
 
 
