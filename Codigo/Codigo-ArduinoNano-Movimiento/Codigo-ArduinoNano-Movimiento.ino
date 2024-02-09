@@ -142,6 +142,7 @@ void inicializarServos() {
   // m_servoVertical.write(180);               // Posición inicial del servo vertical
 }
 
+// Inicia los pines Servo LDr 
 void iniciarSensorLDR() {
   pinMode(PIN_LDR_Arriba, INPUT);
   pinMode(PIN_LDR_Izquierda, INPUT);
