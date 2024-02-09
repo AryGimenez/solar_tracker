@@ -30,7 +30,7 @@ Servo m_servoHorizontal;
 Servo m_servoVertical;
 
 // variables para guardar la ultima posicion de los servos
-int m_ServoHorizontalPociicon = 0;
+int m_ServoHorizontalPosicion = 0;
 int m_ServoVerticalPosicion = 0;
 
 // Definición de constantes para la calibración y los límites de movimiento del servo
@@ -64,7 +64,7 @@ void moveVertical(int direction) {
 void moveHorizontal(int direction) {
   // Calcula la nueva posición horisontal del servomotor, asegurándose de que esté dentro de los límites permitidos
   int newHorizontalPosition = constrain(m_ServoHorizontalPosicion + direction * ANGLE_STEP, MIN_ANGLE, MAX_ANGLE);
-  servoHorizontal.write(newHorizontalPosition);
+  m_servoHorizontal.write(newHorizontalPosition);
   m_ServoHorizontalPosicion = newHorizontalPosition;
   Serial.print("Servo Horizontal: ");
   Serial.println(newHorizontalPosition);
@@ -179,34 +179,34 @@ void controlarServosConJoystick() {
 
     // Movimiento Horizontal
     if (valorX < umbralInferior) {
-        m_ServoHorizontalPociicon--; // Mueve hacia la izquierda
+        m_ServoHorizontalPosicion--; // Mueve hacia la izquierda
     } else if (valorX > umbralSuperior) {
-        m_ServoHorizontalPociicon++; // Mueve hacia la derecha
+        m_ServoHorizontalPosicion++; // Mueve hacia la derecha
     }
 
     // Movimiento Vertical
     if (valorY < umbralInferior) {
-        m_ServoVerticalPociicon--; // Mueve hacia abajo
+        m_ServoVerticalPosicion--; // Mueve hacia abajo
     } else if (valorY > umbralSuperior) {
-        m_ServoVerticalPociicon++; // Mueve hacia arriba
+        m_ServoVerticalPosicion++; // Mueve hacia arriba
     }
 
 
     // Prefiero Corroborarlo ante Eliminar
 
     // // Restringe los valores de los servos a su rango permitido
-    // m_ServoHorizontalPociicon = constrain(m_ServoHorizontalPociicon, 0, 180);
-    // m_ServoVerticalPociicon = constrain(m_ServoVerticalPociicon, 0, 180);
+    // m_ServoHorizontalPosicion = constrain(m_ServoHorizontalPosicion, 0, 180);
+    // m_ServoVerticalPosicion = constrain(m_ServoVerticalPosicion, 0, 180);
 
     // Mueve los servos a las nuevas posiciones
-    m_servoHorizontal.write(m_ServoHorizontalPociicon);
-    m_servoVertical.write(m_ServoVerticalPociicon);
+    m_servoHorizontal.write(m_ServoHorizontalPosicion);
+    m_servoVertical.write(m_ServoVerticalPosicion);
 
 }
 
 //void moverServo(){
-//  m_servoHorizontal.write(m_ServoHorizontalPociicon);
-//  m_servoVertical.write(m_ServoVerticalPociicon);
+//  m_servoHorizontal.write(m_ServoHorizontalPosicion);
+//  m_servoVertical.write(m_ServoVerticalPosicion);
 //}
 
 
