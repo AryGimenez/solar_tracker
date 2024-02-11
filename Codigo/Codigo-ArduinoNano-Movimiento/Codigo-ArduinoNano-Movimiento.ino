@@ -141,8 +141,12 @@ void inicializarServos() {
   // m_servoHorizontal.write(180);             // Posición inicial del servo horizontal
   // m_servoVertical.write(180);               // Posición inicial del servo vertical
 }
+<<<<<<< HEAD
 
 // Inicia los pines Servo LDr 
+=======
+// Metodo para iniciar el sensor LDR 
+>>>>>>> 461380f (Estoy haciendo las pruebas para ver que el sensor LDR este bien calibrado - I am doing tests to see that the LDR sensor is well calibrated)
 void iniciarSensorLDR() {
   pinMode(PIN_LDR_Arriba, INPUT);
   pinMode(PIN_LDR_Izquierda, INPUT);
@@ -152,7 +156,8 @@ void iniciarSensorLDR() {
 
 
 
-// revisar 
+// Metodo para que revisa que no se alla precionado lagun boton 
+// par los moteods de uso y si es asi actualiza el modo de uso selecionado por boton 
 void actualizarModo() {
   if (digitalRead(PIN_BTNModoManual) == HIGH) {
     modoManualActivo = true;
@@ -204,11 +209,6 @@ void controlarServosConJoystick() {
     m_servoVertical.write(m_ServoVerticalPosicion);
 
 }
-
-//void moverServo(){
-//  m_servoHorizontal.write(m_ServoHorizontalPosicion);
-//  m_servoVertical.write(m_ServoVerticalPosicion);
-//}
 
 
 void leerSensores() {
