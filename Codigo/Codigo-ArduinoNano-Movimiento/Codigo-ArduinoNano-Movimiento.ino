@@ -192,11 +192,11 @@ void controlarServosConJoystick() {
         m_ServoVerticalPosicion++; // Mueve hacia arriba
     }
 
+    // Restringe los valores de los servos a su rango permitido
+    int m_velocidadMovimiento = 5;
+    m_ServoHorizontalPosicion = m_ServoHorizontalPosicion * m_velocidadMovimiento;
 
-    // Prefiero Corroborarlo ante Eliminar
-
-    // // Restringe los valores de los servos a su rango permitido
-    // m_ServoHorizontalPosicion = constrain(m_ServoHorizontalPosicion, 0, 180);
+     m_ServoHorizontalPosicion = constrain(m_ServoHorizontalPosicion, 0, 180);
     // m_ServoVerticalPosicion = constrain(m_ServoVerticalPosicion, 0, 180);
 
     // Mueve los servos a las nuevas posiciones
@@ -252,18 +252,22 @@ void setup() {
 // Loop principal
 void loop() {
   verificarSensoresLDR();
-   
+  // Metodo para Ferificar si los Sensores LDR estan bine
+  // es decir si los pines corresponden a las ubicaciones 
+  // up Dwon lert joint
 
- // actualizarModo();
- // if (modoManualActivo) {
- //   controlarServosConJoystick();
- //  } else {
- //   controlarServosConLDR();
- // }
+  // verificarSensoresLDR();
+  
+   actualizarModo();
+  if (modoManualActivo) {
+    controlarServosConJoystick();
+  } else {
+    controlarServosConLDR();
+  }
  
  
- // leerSensores();
- // mostrarDatos();
+  leerSensores();
+  mostrarDatos();
 
 
 }
