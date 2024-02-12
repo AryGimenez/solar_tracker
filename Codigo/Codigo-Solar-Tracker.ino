@@ -4,7 +4,7 @@
 #include <SD.h> //Tarjeta SD
 
 
- <
+ 
  
 Servo servo_Vertical;      // create servo object to control a servo (Vertical)
 Servo servo_Horizonal;  // create servo object to control a servo (Horizontal)
