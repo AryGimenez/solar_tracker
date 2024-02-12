@@ -192,9 +192,20 @@ void controlarServosConJoystick() {
         m_ServoVerticalPosicion++; // Mueve hacia arriba
     }
 
+    // Modificar Movimiento Vertical
+
+
+
+
     // Restringe los valores de los servos a su rango permitido
+
+    // Velocidad de movimiento de eje Vertical En este caso se mueve cada 5 grados \
     int m_velocidadMovimiento = 5;
     m_ServoHorizontalPosicion = m_ServoHorizontalPosicion * m_velocidadMovimiento;
+
+
+
+
 
      m_ServoHorizontalPosicion = constrain(m_ServoHorizontalPosicion, 0, 180);
     // m_ServoVerticalPosicion = constrain(m_ServoVerticalPosicion, 0, 180);
@@ -202,6 +213,8 @@ void controlarServosConJoystick() {
     // Mueve los servos a las nuevas posiciones
     m_servoHorizontal.write(m_ServoHorizontalPosicion);
     m_servoVertical.write(m_ServoVerticalPosicion);
+
+
 
 }
 
@@ -251,7 +264,6 @@ void setup() {
 
 // Loop principal
 void loop() {
-  verificarSensoresLDR();
   // Metodo para Ferificar si los Sensores LDR estan bine
   // es decir si los pines corresponden a las ubicaciones 
   // up Dwon lert joint
