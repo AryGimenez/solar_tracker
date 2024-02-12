@@ -113,11 +113,15 @@ void verificarSensoresLDR() {
   int valorLDRAbajo = analogRead(PIN_LDR_Abajo);
   int valorLDRIzquierda = analogRead(PIN_LDR_Izquierda);
   
-  // Imprimir los valores leídos
-  Serial.println("Valor LDR Arriba: " + String(valorLDRArriba));
-  Serial.println("Valor LDR Derecha: " + String(valorLDRDerecha));
-  Serial.println("Valor LDR Abajo: " + String(valorLDRAbajo));
-  Serial.println("Valor LDR Izquierda: " + String(valorLDRIzquierda));
+  // Imprimir los valores leídos - Imprime: "LDR Up: valor, Right: valor, Down: valor, Left: valor"
+  Serial.print("LDR Up: " + String(valorLDRArriba) + ", ");
+  Serial.print("Right: " + String(valorLDRDerecha) + ", ");
+  Serial.print("Down: " + String(valorLDRAbajo) + ", ");
+  Serial.println("Left: " + String(valorLDRIzquierda));
+
+
+  //Esperar 3 segundos
+  delay(1000);
 }
 
 
@@ -137,12 +141,13 @@ void inicializarServos() {
   m_servoHorizontal.attach(PIN_ServoHorizontal);             // Adjunta el servo horizontal al pin 11
   m_servoVertical.attach(PIN_BTNModoAutomatico);               // Adjunta el servo vertical al pin 10
  
+  moveHorizontal(10);
   // Estableser Posición inicial de los servos
   // m_servoHorizontal.write(180);             // Posición inicial del servo horizontal
   // m_servoVertical.write(180);               // Posición inicial del servo vertical
 }
 
-// Inicia los pines Servo LDr 
+// Metodo para iniciar el sensor LDR 
 void iniciarSensorLDR() {
   pinMode(PIN_LDR_Arriba, INPUT);
   pinMode(PIN_LDR_Izquierda, INPUT);
@@ -152,7 +157,8 @@ void iniciarSensorLDR() {
 
 
 
-// revisar 
+// Metodo para que revisa que no se alla precionado lagun boton 
+// par los moteods de uso y si es asi actualiza el modo de uso selecionado por boton 
 void actualizarModo() {
   if (digitalRead(PIN_BTNModoManual) == HIGH) {
     modoManualActivo = true;
@@ -217,11 +223,6 @@ void controlarServosConJoystick() {
 
 
 }
-
-//void moverServo(){
-//  m_servoHorizontal.write(m_ServoHorizontalPosicion);
-//  m_servoVertical.write(m_ServoVerticalPosicion);
-//}
 
 
 void leerSensores() {
