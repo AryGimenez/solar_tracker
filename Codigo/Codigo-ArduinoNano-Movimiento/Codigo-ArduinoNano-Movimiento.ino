@@ -137,7 +137,7 @@ void moveHorcizontal(int direction) {
 // ------------------- Codigo Obsoleto -------------------
 
 // // Función para mover el servomotor horizontalmente
-// void moveHorizontal(int direction) {
+// void moveHorcizontal(int direction) {
   
 //   // Calcula la nueva posición horisontal del servomotor, 
 //   // asegurándose de que esté dentro de los límites permitidos
@@ -200,7 +200,7 @@ void inicializarServos() {
   m_servoHorizontal.attach(PIN_ServoHorizontal);             // Adjunta el servo horizontal al pin 11
   m_servoVertical.attach(PIN_BTNModoAutomatico);               // Adjunta el servo vertical al pin 10
  
-  moveHorizontal(10);
+  moveHorcizontal(10);
   // Estableser Posición inicial de los servos
   // m_servoHorizontal.write(180);             // Posición inicial del servo horizontal
   // m_servoVertical.write(180);               // Posición inicial del servo vertical
@@ -308,7 +308,7 @@ void controlarServosConJoystick() {
 
     // Restringe los valores de los servos a su rango permitido
 
-    // Velocidad de movimiento de eje Vertical En este caso se mueve cada 5 grados \
+    // Velocidad de movimiento de eje Vertical En este caso se mueve cada 5 grados
     int m_velocidadMovimiento = 5;
     m_ServoHorizontalPosicion = m_ServoHorizontalPosicion * m_velocidadMovimiento;
 
@@ -350,12 +350,12 @@ void controlarServosConLDR() {
   } else if (valorLDRDerecha > valorLDRArriba  
              && valorLDRDerecha > valorLDRAbajo 
              && valorLDRDerecha > valorLDRIzquierda) {              
-    moveHorizontal(1); // Mover hacia la derecha
+    moveHorcizontal(1); // Mover hacia la derecha
 
   } else if (valorLDRIzquierda > valorLDRArriba 
               && valorLDRIzquierda > valorLDRAbajo 
               && valorLDRIzquierda > valorLDRDerecha) {
-    moveHorizontal(-1); // Mover hacia la izquierda
+    moveHorcizontal(-1); // Mover hacia la izquierda
   
   }
 }
@@ -373,7 +373,7 @@ void leerSensores() {
 // lee el amperaje del sensor de amperaje
 void leerAmperaje() {
   int sensorValue = analogRead(PIN_SensorAmperaje);
-  float voltage = (sensorValue * 5.0) / 102 3.0;
+  float voltage = (sensorValue * 5.0) / 1023.0;
   currentAmperage = (voltage - 2.5) / 0.185;
 }
 
