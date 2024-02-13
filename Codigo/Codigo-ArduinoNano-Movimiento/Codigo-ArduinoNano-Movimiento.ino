@@ -361,6 +361,9 @@ void controlarServosConLDR() {
 }
 
 
+//  ------------------- Metodos de Sensores -------------------
+
+
 // Lee los valores de los sensores de amperaje y voltaje
 void leerSensores() {
   leerAmperaje();
@@ -370,9 +373,10 @@ void leerSensores() {
 // lee el amperaje del sensor de amperaje
 void leerAmperaje() {
   int sensorValue = analogRead(PIN_SensorAmperaje);
-  float voltage = (sensorValue * 5.0) / 1023.0;
+  float voltage = (sensorValue * 5.0) / 102 3.0;
   currentAmperage = (voltage - 2.5) / 0.185;
 }
+
 // lee el voltaje del sensor de voltaje
 void leerVoltaje() {
   int sensorValue = analogRead(PIN_SensorVoltaje);
@@ -391,6 +395,7 @@ void mostrarDatos() {
   Serial.println(" V");
 }
 
+// ------------------- --- -------------------
 
 
 
@@ -414,6 +419,8 @@ void loop() {
   // verificarSensoresLDR();
   
    actualizarModo();
+
+  // Si el modo manual está activo, controla los servos con el joystick.   
   if (modoManualActivo) {
     controlarServosConJoystick();
   } else {
@@ -424,6 +431,10 @@ void loop() {
   leerSensores();
   mostrarDatos();
 
+  //Espear 1 segundo
+  delay(1000);
+
+  
 
 }
 
