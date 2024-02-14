@@ -19,6 +19,9 @@ const int PIN_LDR_Izquierda = A3;         // ➡️ - Pin para el LDR de "Izquie
 const int PIN_LDR_Abajo = A2;             // ⬇️ - Pin para el LDR de "Abajo"
 const int PIN_LDR_Derecha = A1;           // ⬅️ - Pin para el LDR de "Derecha"
 
+const int m_umbralSensibilidad = 10; // Esta variable se usa para ajustar la sensibilidad de el sensor LDR
+
+
 // Pines para los sensores de amperaje y voltaje
 const int PIN_SensorAmperaje = A6;        // Pin para el sensor de amperaje
 const int PIN_SensorVoltaje = A7;         // Pin para el sensor de voltaje
@@ -335,7 +338,90 @@ void controlarServosConLDR() {
   int valorLDRDerecha = analogRead(PIN_LDR_Derecha);
   int valorLDRAbajo = analogRead(PIN_LDR_Abajo);
   int valorLDRIzquierda = analogRead(PIN_LDR_Izquierda);
+
+
+  Serial.print("Arriba: ");
+  Serial.print(valorLDRArriba);
+  Serial.print(" | Derecha: ");
+  Serial.print(valorLDRDerecha);
+  Serial.print(" | Abajo: ");
+  Serial.print(valorLDRAbajo);
+  Serial.print(" | Izquierda: ");
+  Serial.println(valorLDRIzquierda);
   
+  // Determinar la dirección de la luz más intensa de lado vertical
+  if (abs(valorLDRArriba - valorLDRAbajo) > m_umbralSensibilidad) {
+    if (valorLDRArriba > valorLDRAbajo) {
+      moveVertical(-1); // Mover hacia arriba
+    } else {
+      moveVertical(1); // Mover hacia abajo
+    }
+  }
+
+  // Determinar la dirección de la luz más intensa de lado horizontal
+  if (abs(valorLDRDerecha - valorLDRIzquierda) > m_umbralSensibilidad) {
+    if (valorLDRDerecha > valorLDRIzquierda) {
+      moveHorcizontal(1); // Mover hacia la derecha
+    } else {
+      moveHorcizontal(-1); // Mover hacia la izquierda
+    }
+  }
+
+
+/**
+Salida V2
+Arriba: 229 | Derecha: 84 | Abajo: 16 | Izquierda: 284
+Servo Vertical: 0
+Servo Horizontal: 0
+Amperaje: 2.92 A, Voltaje: 11.92 V
+Arriba: 228 | Derecha: 84 | Abajo: 16 | Izquierda: 283
+Servo Vertical: 0
+Servo Horizontal: 0
+Amperaje: 2.97 A, Voltaje: 11.92 V
+Arriba: 366 | Derecha: 87 | Abajo: 17 | Izquierda: 415
+Servo Vertical: 0
+Servo Horizontal: 0
+Amperaje: 2.89 A, Voltaje: 11.92 V
+Arriba: 366 | Derecha: 88 | Abajo: 18 | Izquierda: 415
+Servo Vertical: 0
+Servo Horizontal: 0
+Amperaje: 2.87 A, Voltaje: 11.92 V
+
+--------------------------------------------
+
+
+
+Salida de Comando
+Amperaje: 2.84 A, Voltaje: 11.94 V
+Arriba: 193 | Derecha: 438 | Abajo: 46 | Izquierda: 246
+Amperaje: 2.79 A, Voltaje: 11.92 V
+Arriba: 194 | Derecha: 425 | Abajo: 46 | Izquierda: 245
+Amperaje: 2.68 A, Voltaje: 11.92 V
+Arriba: 194 | Derecha: 426 | Abajo: 46 | Izquierda: 244
+Amperaje: 2.79 A, Voltaje: 11.92 V
+Arriba: 203 | Derecha: 439 | Abajo: 47 | Izquierda: 246
+Amperaje: 2.76 A, Voltaje: 11.92 V
+Arriba: 204 | Derecha: 442 | Abajo: 46 | Izquierda: 246
+Amperaje: 2.76 A, Voltaje: 11.92 V
+Arriba: 206 | Derecha: 444 | Abajo: 47 | Izquierda: 248
+Amperaje: 2.68 A, Voltaje: 11.89 V
+Arriba: 205 | Derecha: 442 | Abajo: 46 | Izquierda: 247
+Amperaje: 3.00 A, Voltaje: 11.94 V
+Arriba: 205 | Derecha: 441 | Abajo: 47 | Izquierda: 246
+Amperaje: 2.71 A, Voltaje: 11.92 V
+Arriba: 204 | Derecha: 442 | Abajo: 46 | Izquierda: 247
+Amperaje: 2.73 A, Voltaje: 11.92 V
+Arriba: 196 | Derecha: 443 | Abajo: 47 | Izquierda: 247
+Amperaje: 2.68 A, Voltaje: 11.89 V
+Arriba: 195 | Derecha: 442 | Abajo: 47 | Izquierda: 247
+Amperaje: 2.63 A, Voltaje: 11.94 V
+
+*/
+
+
+  
+/**  
+   Codigo Obsoleto 
     // Determinar la dirección de la luz más intensa de lado vertical
   if (valorLDRArriba > valorLDRAbajo 
       && valorLDRArriba > valorLDRDerecha  
@@ -357,7 +443,9 @@ void controlarServosConLDR() {
               && valorLDRIzquierda > valorLDRDerecha) {
     moveHorcizontal(-1); // Mover hacia la izquierda
   
-  }
+   }
+*/
+
 }
 
 

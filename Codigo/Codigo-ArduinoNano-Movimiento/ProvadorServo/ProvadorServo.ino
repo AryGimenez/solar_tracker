@@ -5,7 +5,7 @@ int velocidad = 0;  // Variable para almacenar la "velocidad"
 
 void setup() {
   Serial.begin(9600);  // Inicia la comunicación serial
-  miServo.attach(10);  // Adjunta el servo al pin D11
+  miServo.attach(11);  // Adjunta el servo al pin D11
   Serial.println("Ingrese la velocidad (-90 a 90) y presione enviar:");
 }
 
