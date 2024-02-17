@@ -201,7 +201,7 @@ void inicializarPinesModoUso() {
 // Función para inicializar los servos
 void inicializarServos() {
   m_servoHorizontal.attach(PIN_ServoHorizontal);             // Adjunta el servo horizontal al pin 11
-  m_servoVertical.attach(PIN_BTNModoAutomatico);               // Adjunta el servo vertical al pin 10
+  m_servoVertical.attach(PIN_ServoVertical);               // Adjunta el servo vertical al pin 10
  
   moveHorcizontal(10);
   // Estableser Posición inicial de los servos
