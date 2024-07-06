@@ -1,0 +1,62 @@
+ontal: -11975
+Amperaje: -2.10 A, Voltaje: 0.14 V
+Arriba: 137 | Derecha: 63 | Abajo: 71 | Izquierda: 284
+Servo Vertical: -12811
+Servo Horizontal: -8324
+Amperaje: -3.18 A, Voltaje: 0.45 V
+
+Arriba: 94 | Derecha: 285 | Abajo: 275 | Izquierda: 427
+Servo Vertical: 5508
+Servo Horizontal: 30776
+Amperaje: -1.04 A, Voltaje: 0.00 V
+Arriba: 176 | Derecha: 174 | Abajo: 98 | Izquierda: 307
+Servo Vertical: -965
+Servo Horizontal: 31685
+Amperaje: -2.71 A, Voltaje: 0.29 V
+Arriba: 97 | Derecha: 292 | Abajo: 279 | Izquierda: 431
+Servo Vertical: -10970
+Servo Horizontal: -23246
+Amperaje: 2.95 A, Voltaje: 0.18 V
+Arriba: 96 | Derecha: 299 | Abajo: 260 | Izquierda: 404
+Servo Vertical: 3377
+Servo Horizontal: -8747
+Amperaje: -1.65 A, Voltaje: 0.00 V
+Arriba: 157 | Derecha: 169 | Abajo: 96 | Izquierda: 304
+Servo Vertical: -25826
+Servo Horizontal: 29336
+Amperaje: -2.71 A, Voltaje: 0.14 V
+Arriba: 96 | Derecha: 288 | Abajo: 276 | Izquierda: 433
+Servo Vertical: 26665
+Servo Horizontal: 14885
+Amperaje: -1.44 A, Voltaje: 0.16 V
+Arriba: 152 | Derecha: 162 | Abajo: 91 | Izquierda: 298
+Servo Vertical: -16277
+
+
+
+
+LDR Arriba: 105, LDR Izquierda: 443, LDR Abajo: 369, LDR Derecha: 311
+LDR Arriba: 105, LDR Izquierda: 444, LDR Abajo: 368, LDR Derecha: 310
+LDR Arriba: 105, LDR Izquierda: 444, LDR Abajo: 367, LDR Derecha: 310
+LDR Arriba: 105, LDR Izquierda: 442, LDR Abajo: 367, LDR Derecha: 309
+LDR Arriba: 105, LDR Izquierda: 443, LDR Abajo: 368, LDR Derecha: 310
+LDR Arriba: 105, LDR Izquierda: 443, LDR Abajo: 369, LDR Derecha: 310
+LDR Arriba: 105, LDR Izquierda: 443, LDR Abajo: 368, LDR Derecha: 309
+LDR Arriba: 105, LDR Izquierda: 442, LDR Abajo: 368, LDR Derecha: 309
+LDR Arriba: 105, LDR Izquierda: 443, LDR Abajo: 366, LDR Derecha: 309
+LDR Arriba: 105, LDR Izquierda: 442, LDR Abajo: 367, LDR Derecha: 310
+LDR Arriba: 105, LDR Izquierda: 442, LDR Abajo: 369, LDR Derecha: 309
+
+
+LDR Arriba: 79, LDR Izquierda: 412, LDR Abajo: 364, LDR Derecha: 278
+LDR Arriba: 77, LDR Izquierda: 411, LDR Abajo: 363, LDR Derecha: 277
+LDR Arriba: 78, LDR Izquierda: 412, LDR Abajo: 360, LDR Derecha: 280
+LDR Arriba: 78, LDR Izquierda: 412, LDR Abajo: 360, LDR Derecha: 284
+LDR Arriba: 78, LDR Izquierda: 413, LDR Abajo: 361, LDR Derecha: 285
+LDR Arriba: 78, LDR Izquierda: 413, LDR Abajo: 362, LDR Derecha: 288
+LDR Arriba: 78, LDR Izquierda: 412, LDR Abajo: 362, LDR Derecha: 281
+LDR Arriba: 76, LDR Izquierda: 412, LDR Abajo: 363, LDR Derecha: 272
+LDR Arriba: 77, LDR Izquierda: 413, LDR Abajo: 363, LDR Derecha: 268
+LDR Arriba: 52, LDR Izquierda: 278, LDR Abajo: 246, LDR Derecha: 180
+LDR Arriba: 53, LDR Izquierda: 280, LDR Abajo: 246, LDR Derecha: 186
+LDR Arriba: 53, LDR Izquierda: 279, LDR Abajo: 243, LDR Derecha: 193
