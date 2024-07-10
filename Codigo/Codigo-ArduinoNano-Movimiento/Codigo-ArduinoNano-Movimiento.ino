@@ -177,6 +177,7 @@ void inicializarServos() {
   m_servoVertical.attach(PIN_ServoVertical);               // Adjunta el servo vertical al pin 10
  
   moveHorcizontal(0);
+  
   // Estableser Posición inicial de los servos
   // m_servoHorizontal.write(180);             // Posición inicial del servo horizontal
   // m_servoVertical.write(180);               // Posición inicial del servo vertical
