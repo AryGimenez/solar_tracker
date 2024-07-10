@@ -167,62 +167,6 @@ bool modoManualActivo = false;  // MOdo de uso LDR activado por defect\
     Serial.println(xPWM_Temp);
   } // Fin de la función 'moveHorizontal'
 
-
-/**
- * @brief inicializarServos
- * Inicializa los servos y los mueve a la posición inicial.
- */
-void inicializarServos() {
-  m_servoHorizontal.attach(PIN_ServoHorizontal);             // Adjunta el servo horizontal al pin 11
-  m_servoVertical.attach(PIN_ServoVertical);               // Adjunta el servo vertical al pin 10
- 
-  moveHorcizontal(0);
-  
-  // Estableser Posición inicial de los servos
-  // m_servoHorizontal.write(180);             // Posición inicial del servo horizontal
-  // m_servoVertical.write(180);               // Posición inicial del servo vertical
-}
-
-// ⚙️ Fin Servos ------------------------------
-
-
-// 📡 Sensor LDR ------------------------------
-
-  /**
-   * @def verificarSensoresLDR
-   * Metodo utilizado para verificar los sentidos Del Sensor LDR  
-   */ 
-    void verificarSensoresLDR() {
-    // Leer los valores analógicos de los sensores LDR
-    int valorLDRArriba = analogRead(PIN_LDR_Arriba);
-    int valorLDRDerecha = analogRead(PIN_LDR_Derecha);
-    int valorLDRAbajo = analogRead(PIN_LDR_Abajo);
-    int valorLDRIzquierda = analogRead(PIN_LDR_Izquierda);
-    
-    // Imprimir los valores leídos - Imprime: "LDR Up: valor, Right: valor, Down: valor, Left: valor"
-    Serial.print("LDR Up: " + String(valorLDRArriba) + ", ");
-    Serial.print("Right: " + String(valorLDRDerecha) + ", ");
-    Serial.print("Down: " + String(valorLDRAbajo) + ", ");
-    Serial.println("Left: " + String(valorLDRIzquierda));
-
-
-    //Esperar 3 segundos
-    delay(1000);
-  }
-
-  /**
-   * @brief iniciarSensorLDR
-   * Inicializa los pines utilizados para los sensores LDR.
-   * */
-    void iniciarSensorLDR() {
-      pinMode(PIN_LDR_Arriba, INPUT);
-      pinMode(PIN_LDR_Izquierda, INPUT);
-      pinMode(PIN_LDR_Abajo, INPUT);
-      pinMode(PIN_LDR_Derecha, INPUT);
-      }
-
-
-
  /**
   * @def controlarSerfosConLDR
   * para controlar servos con el sensor LDR
@@ -263,6 +207,65 @@ void inicializarServos() {
       }
 
     }
+
+/**
+ * @brief inicializarServos
+ * Inicializa los servos y los mueve a la posición inicial.
+ */
+void inicializarServos() {
+  m_servoHorizontal.attach(PIN_ServoHorizontal);             // Adjunta el servo horizontal al pin 11
+  m_servoVertical.attach(PIN_ServoVertical);               // Adjunta el servo vertical al pin 10
+ 
+  moveHorcizontal(0);
+
+  // Estableser Posición inicial de los servos
+  // m_servoHorizontal.write(180);             // Posición inicial del servo horizontal
+  // m_servoVertical.write(180);               // Posición inicial del servo vertical
+}
+
+// ⚙️ Fin Servos ------------------------------
+
+
+// 📡 Sensor LDR ------------------------------
+
+  /**
+   * @def verificarSensoresLDR
+   * Metodo utilizado para verificar los sentidos Del Sensor LDR  
+   */ 
+    void verificarSensoresLDR() {
+    // Leer los valores analógicos de los sensores LDR
+    int valorLDRArriba = analogRead(PIN_LDR_Arriba);
+    int valorLDRDerecha = analogRead(PIN_LDR_Derecha);
+    int valorLDRAbajo = analogRead(PIN_LDR_Abajo);
+    int valorLDRIzquierda = analogRead(PIN_LDR_Izquierda);
+    
+    // Imprimir los valores leídos - Imprime: "LDR Up: valor, Right: valor, Down: valor, Left: valor"
+    Serial.print("LDR Up: " + String(valorLDRArriba) + ", ");
+    Serial.print("Right: " + String(valorLDRDerecha) + ", ");
+    Serial.print("Down: " + String(valorLDRAbajo) + ", ");
+    Serial.println("Left: " + String(valorLDRIzquierda));
+
+
+    //Esperar 3 segundos
+    delay(1000);
+  }
+
+  void imprimirValorConsola() 
+
+  /**
+   * @brief iniciarSensorLDR
+   * Inicializa los pines utilizados para los sensores LDR.
+   * */
+    void iniciarSensorLDR() {
+      pinMode(PIN_LDR_Arriba, INPUT);
+      pinMode(PIN_LDR_Izquierda, INPUT);
+      pinMode(PIN_LDR_Abajo, INPUT);
+      pinMode(PIN_LDR_Derecha, INPUT);
+      }
+
+
+
+
 
 
 
