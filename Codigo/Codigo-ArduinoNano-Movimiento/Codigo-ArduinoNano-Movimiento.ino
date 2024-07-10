@@ -89,13 +89,7 @@ bool modoManualActivo = false;  // MOdo de uso LDR activado por defect\
 
 
 
-
-
 //METODOS -------------------------------------------------------------------
-
-
-
-
 
 
 // ⚙️ Metodos Servos ------------------------------
@@ -114,7 +108,7 @@ bool modoManualActivo = false;  // MOdo de uso LDR activado por defect\
     // 'direction' indica la dirección y magnitud dAel cambio de posición.
     // 'ANGLE_STEP' es la cantidad de grados que el servo debe moverse por cada unidad de 'direction'.
     // 'MIN_ANGLE' y 'MAX_ANGLE' son los límites mínimos y máximos, respectivamente, dentro de los cuales el servomotor puede moverse.
-    
+      
     
     int xPWM_Temp= map(m_ServoVerticalPosicion + direction, 
         MIN_ANGLE, // Valor mínimo de la posición del servomotor
@@ -140,7 +134,7 @@ bool modoManualActivo = false;  // MOdo de uso LDR activado por defect\
    */
   void moveHorcizontal(int direction) {
     
-      // Calcula la nueva posición horizontal del servomotor,
+    // Calcula la nueva posición horizontal del servomotor,
     // asegurándose de que esté dentro de los límites permitidos.
     // 'm_ServoHorizontalPosicion' es la posición actual del servomotor.
     // 'direction' indica la dirección y magnitud del cambio de posición.
@@ -153,11 +147,6 @@ bool modoManualActivo = false;  // MOdo de uso LDR activado por defect\
         MAX_ANGLE, // Valor máximo de la posición del servomotor
         pwmMin, // Valor minimo del PWM
         pwmMax); // Valor maximo del PWM
-
-
-
-
-
 
   // Opcion 1 No funciona Bien y quiero saber la diferencia
     //  int newHorizontalPosition = constrain(
@@ -266,9 +255,9 @@ void inicializarServos() {
       // Determinar la dirección de la luz más intensa de lado horizontal
       if (abs(valorLDRDerecha - valorLDRIzquierda) > m_umbralSensibilidad) {
         if (valorLDRDerecha > valorLDRIzquierda) {
-          moveHorcizontal(-1); // Mover hacia la derecha
+          moveHorcizontal(1); // Mover hacia la derecha
         } else {
-          moveHorcizontal(1); // Mover hacia la izquierda
+          moveHorcizontal(-1); // Mover hacia la izquierda
         }
       }
 
@@ -476,7 +465,7 @@ void loop() {
  
  
   leerSensores();
-  mostrarDatos();
+  // mostrarDatos();
 
   //Espear 1 segundo
   delay(1000);
