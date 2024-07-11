@@ -1,0 +1,33 @@
+# Estructura del Directorio Código
+
+Este directorio contiene el código fuente del proyecto Solar Tracker, organizado en diferentes subdirectorios y archivos según su funcionalidad.
+
+## Subdirectorios y Archivos
+
+- **.vscode**: Configuraciones del entorno de Visual Studio Code.
+  
+- **Codigo-ArduinoNano-Movimiento**: 
+  - Este subdirectorio contiene una versión funcional del proyecto Solar Tracker utilizando un **Arduino Nano** como microcontrolador.
+  - Incluye un sensor de amperaje y voltaje para medir la eficiencia del panel solar.
+
+- **lib**: Bibliotecas utilizadas en el proyecto.
+
+- **solar_tracker_PlatformIO**: 
+  - Este subdirectorio contiene el código utilizando PlatformIO con orientación a objetos.
+  - Se utiliza el entorno de desarrollo integrado (IDE) PlatformIO. 
+  - [Documentación oficial de PlatformIO](https://docs.platformio.org/en/latest/)
+
+- **Codigo-Solar-Tracker.ino**: Código principal del Solar Tracker, escrito en el entorno de desarrollo Arduino.
+
+## Descripción de los Componentes
+
+- **solar_tracker_PlatformIO**: Este subdirectorio es esencial para la implementación del código del Solar Tracker utilizando la estructura de orientación a objetos. Utiliza PlatformIO para gestionar las dependencias y configurar el entorno de desarrollo de manera eficiente. La documentación oficial de PlatformIO se puede consultar para obtener más detalles sobre cómo utilizar este entorno.
+
+- **Codigo-ArduinoNano-Movimiento**: Aquí se encuentra una versión preliminar y funcional del Solar Tracker. Este código es útil para aquellos que desean implementar el proyecto utilizando un Arduino Nano. El subdirectorio incluye el código necesario para controlar los movimientos del panel solar, así como los sensores de amperaje y voltaje para monitorear su rendimiento.
+
+## Notas
+
+Para configurar el entorno y empezar a trabajar con el código del Solar Tracker, asegúrate de tener instaladas todas las bibliotecas necesarias y de seguir las instrucciones proporcionadas en los comentarios del código.
+
+Si necesitas más información sobre cómo utilizar PlatformIO o tienes alguna duda sobre la estructura del código, consulta la documentación oficial de PlatformIO o busca asistencia en la comunidad de desarrolladores.
+
