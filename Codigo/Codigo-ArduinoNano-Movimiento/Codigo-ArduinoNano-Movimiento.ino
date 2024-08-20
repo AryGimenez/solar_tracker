@@ -109,15 +109,15 @@ bool modoManualActivo = false;  // MOdo de uso LDR activado por defect\
     
 
     // Guarda la nueva pocicione en sumandole la nueva funcion del angulo 
-    int x_NuevaPocicionVertical += direction;
+    int x_NuevaPocicionVertical = direction + m_ServoVerticalPosicion;
 
 
     // Verifica que la nueva posición esté en el rango apropiado.
-    if (x_NuevaPocicionVertical < MIN_ANGLE || x_NuevaPocicionVertical > MAX_ANGLE) \
+    if (x_NuevaPocicionVertical < MIN_ANGLE || x_NuevaPocicionVertical > MAX_ANGLE)
       return;
       
     // Actualiza la posición del servomotor.
-    m_ServoVerticalPosicion = x_NuevaPocicionHorisontal;
+    m_ServoVerticalPosicion = x_NuevaPocicionVertical;
 
     int xPWM_Temp= map(m_ServoVerticalPosicion, 
         MIN_ANGLE, // Valor mínimo de la posición del servomotor
@@ -149,7 +149,7 @@ bool modoManualActivo = false;  // MOdo de uso LDR activado por defect\
 
 
     // Guarda la nueva pocicione en sumandole la nueva funcion del angulo 
-    int x_NuevaPocicionHorizontal += direction;
+    int x_NuevaPocicionHorizontal = direction + m_ServoHorizontalPosicion;
 
 
     // Verifica que la nueva posición esté en el rango apropiado.
@@ -285,18 +285,17 @@ void inicializarServos() {
     delay(1000);
   }
 
-  void imprimirValorConsola() 
-
   /**
    * @brief iniciarSensorLDR
    * Inicializa los pines utilizados para los sensores LDR.
    * */
-    void iniciarSensorLDR() {
-      pinMode(PIN_LDR_Arriba, INPUT);
-      pinMode(PIN_LDR_Izquierda, INPUT);
-      pinMode(PIN_LDR_Abajo, INPUT);
-      pinMode(PIN_LDR_Derecha, INPUT);
-    }
+
+  void iniciarSensorLDR() {
+    pinMode(PIN_LDR_Arriba, INPUT);
+    pinMode(PIN_LDR_Izquierda, INPUT);
+    pinMode(PIN_LDR_Abajo, INPUT);
+    pinMode(PIN_LDR_Derecha, INPUT); 
+   }
 
 
 

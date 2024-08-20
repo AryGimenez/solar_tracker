@@ -4,7 +4,7 @@ Servo miServo;
 
 // ⬆️⬇️ 10 Pin Vertical 
 // ⬅️➡️ 11 Pin Hotizontal
-// PIN Servo
+// PIN Servoxx
 int PIN_Servo = 10;
 
 
@@ -36,16 +36,15 @@ void loop() {
 void moverServoAutomatico(){
 
   int xVelocidad = 1000;
-  int xIncrementador = 5;
 
   // Mueve el servo del grado  0 a 180
-  for (int i = 0; i <= 180; i += xIncrementador){
+  for (int i = 0; i <= 180; i ++){
     movServo(i);
     delay(xVelocidad);
   }
 
   // Mueve el servo del grado 180 a 0
-  for (int i = 180; i >= 0; i -= xIncrementador){
+  for (int i = 180; i >= 0; i ++){
     movServo(i);
     delay(xVelocidad);
   }
