@@ -160,7 +160,7 @@ bool modoManualActivo = false;  // MOdo de uso LDR activado por defect\
     m_ServoHorizontalPosicion = x_NuevaPocicionHorizontal;
    
     
-    int xPWM_Temp = map(m_ServoHorizontalPosicion + direction, 
+    int xPWM_Temp = map(m_ServoHorizontalPosicion, 
         MIN_ANGLE, // Valor mínimo de la posición del servomotor
         MAX_ANGLE, // Valor máximo de la posición del servomotor
         pwmMin, // Valor minimo del PWM
@@ -177,12 +177,10 @@ bool modoManualActivo = false;  // MOdo de uso LDR activado por defect\
     // Mueve el servomotor a la nueva posición calculada.
     m_servoHorizontal.write(xPWM_Temp);
     
-    // Actualiza la posición actual del servomotor con la nueva posición.
-    m_ServoHorizontalPosicion = xPWM_Temp;
-    
+ 
     // Imprime la nueva posición del servomotor horizontal en el monitor serial para depuración y monitoreo.
     Serial.print("Servo Horizontal: ");
-    Serial.println(xPWM_Temp);
+    Serial.println(m_ServoHorizontalPosicion);
   } // Fin de la función 'moveHorizontal'
 
  /**
@@ -234,7 +232,10 @@ bool modoManualActivo = false;  // MOdo de uso LDR activado por defect\
      * 
      */
     void VerifiarEsadoSero (boolean pVertica){
-      for (size_t i = 0; i < 180; i++)
+      
+      if ()
+
+      for (int i = 0; i < 180; i++)
       {
         moveVertical(1);
       }
@@ -502,7 +503,7 @@ void loop() {
   }
  
  
-  leerSensores();
+  // leerSensores();
   // mostrarDatos();
 
   //Espear 1 segundo
