@@ -54,11 +54,9 @@ bool modoManualActivo = false;  // MOdo de uso LDR activado por defect\
 // 📡 FIN Sensor LDR -----------------------------
 
 
-
-
-
-
 // ⚙️ Atributos Servos ------------------------------
+  // ⬆️⬇️ 10 Pin Vertical - Ubicado en la pantalla solar
+  // ⬅️➡️ 11 Pin Hotizontal - Ubicado En el eje del soporto 
 
   // Declaraciones para los servos
   const int PIN_ServoHorizontal = 11;       // Pin para el servo horizontal
@@ -105,7 +103,7 @@ bool modoManualActivo = false;  // MOdo de uso LDR activado por defect\
     // Calcula la nueva posición vertical del servomotor,
     // asegurándose de que esté dentro de los límites permitidos.
     // 'm_ServoVerticalPosicion' es la posición actual del servomotor.
-    // 'direction' indica la dirección y magnitud dAel cambio de posición.
+    // 'direction' indica la dirección y magnitud del cambio de posición.
     // 'ANGLE_STEP' es la cantidad de grados que el servo debe moverse por cada unidad de 'direction'.
     // 'MIN_ANGLE' y 'MAX_ANGLE' son los límites mínimos y máximos, respectivamente, dentro de los cuales el servomotor puede moverse.
       
@@ -149,7 +147,7 @@ bool modoManualActivo = false;  // MOdo de uso LDR activado por defect\
         pwmMax); // Valor maximo del PWM
 
   // Opcion 1 No funciona Bien y quiero saber la diferencia
-    //  int newHorizontalPosition = constrain(
+    //  int newHorizontalPosition = constrain(  
     //   m_ServoHorizontalPosicion + direction , 
     //   MIN_ANGLE, 
     //   MAX_ANGLE); // Agregar Configuracion PWMN
@@ -212,15 +210,17 @@ bool modoManualActivo = false;  // MOdo de uso LDR activado por defect\
  * @brief inicializarServos
  * Inicializa los servos y los mueve a la posición inicial.
  */
+
 void inicializarServos() {
-  m_servoHorizontal.attach(PIN_ServoHorizontal);             // Adjunta el servo horizontal al pin 11
-  m_servoVertical.attach(PIN_ServoVertical);               // Adjunta el servo vertical al pin 10
+
+   m_servoHorizontal.attach(PIN_ServoHorizontal);             // Adjunta el servo horizInicializa ontal al pin 11
+   m_servoVertical.attach(PIN_ServoVertical);               // Adjunta el servo vertical al pin 10
  
   moveHorcizontal(0);
 
   // Estableser Posición inicial de los servos
-  // m_servoHorizontal.write(180);             // Posición inicial del servo horizontal
-  // m_servoVertical.write(180);               // Posición inicial del servo vertical
+   m_servoHorizontal.write(180);             // Posición inicial del servo horizontal
+   m_servoVertical.write(180);               // Posición inicial del servo vertical
 }
 
 // ⚙️ Fin Servos ------------------------------
@@ -261,7 +261,7 @@ void inicializarServos() {
       pinMode(PIN_LDR_Izquierda, INPUT);
       pinMode(PIN_LDR_Abajo, INPUT);
       pinMode(PIN_LDR_Derecha, INPUT);
-      }
+    }
 
 
 
