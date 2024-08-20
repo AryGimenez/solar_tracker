@@ -233,12 +233,28 @@ bool modoManualActivo = false;  // MOdo de uso LDR activado por defect\
      */
     void VerifiarEsadoSero (boolean pVertica){
       
-      if ()
+      if (pVertica){
+        m_ServoVerticalPosicion = 0;
+        moveVertical(0);
+        
+        for (int i = 0; i < 180; i++)
+        {
+          delay(1000);
+          moveVertical(1);
+        }
 
-      for (int i = 0; i < 180; i++)
-      {
-        moveVertical(1);
+      }else{
+        m_ServoHorizontalPosicion = 0;
+        moveHorcizontal(0);
+        
+        for (int i = 0; i < 180; i++)
+        {
+          delay(1000);
+          moveHorcizontal(1);
+        }        
       }
+  
+
       
     }
 
@@ -492,15 +508,20 @@ void loop() {
   // up Dwon lert joint
 
   // verificarSensoresLDR();
+
   
-   actualizarModo();
+
+  VerifiarEsadoSero(true);
+  VerifiarEsadoSero(false);
+
+    // actualizarModo();
 
   // Si el modo manual está activo, controla los servos con el joystick.   
-  if (modoManualActivo) {
-    controlarServosConJoystick();
-  } else {
-    controlarServosConLDR();
-  }
+  // if (modoManualActivo) {
+   //  controlarServosConJoystick();
+  // } else {
+  //  controlarServosConLDR();
+  //}
  
  
   // leerSensores();
