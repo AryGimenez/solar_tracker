@@ -106,9 +106,20 @@ bool modoManualActivo = false;  // MOdo de uso LDR activado por defect\
     // 'direction' indica la dirección y magnitud del cambio de posición.
     // 'ANGLE_STEP' es la cantidad de grados que el servo debe moverse por cada unidad de 'direction'.
     // 'MIN_ANGLE' y 'MAX_ANGLE' son los límites mínimos y máximos, respectivamente, dentro de los cuales el servomotor puede moverse.
-      
     
-    int xPWM_Temp= map(m_ServoVerticalPosicion + direction, 
+
+    // Guarda la nueva pocicione en sumandole la nueva funcion del angulo 
+    int x_NuevaPocicionVertical += direction;
+
+
+    // Verifica que la nueva posición esté en el rango apropiado.
+    if (x_NuevaPocicionVertical < MIN_ANGLE || x_NuevaPocicionVertical > MAX_ANGLE) \
+      return;
+      
+    // Actualiza la posición del servomotor.
+    m_ServoVerticalPosicion = x_NuevaPocicionHorisontal;
+
+    int xPWM_Temp= map(m_ServoVerticalPosicion, 
         MIN_ANGLE, // Valor mínimo de la posición del servomotor
         MAX_ANGLE, // Valor máximo de la posición del servomotor
         pwmMin, // Valor minimo del PWM
@@ -117,12 +128,9 @@ bool modoManualActivo = false;  // MOdo de uso LDR activado por defect\
     // Mueve el servomotodr a la nueva posición calculada.
     m_servoVertical.write(xPWM_Temp);
     
-    // Actualiza la posición actual del servomotor con la nueva posición.
-     m_ServoVerticalPosicion = xPWM_Temp;
-    
     // Imprime la nueva posición del servomotor vertical en el monitor serial para depuración y monitoreo.
     Serial.print("Servo Vertical: ");
-    Serial.println(xPWM_Temp);
+    Serial.println(m_ServoVerticalPosicion);
   } // Fin de la función 'moveVertical'
 
   /**
@@ -138,7 +146,19 @@ bool modoManualActivo = false;  // MOdo de uso LDR activado por defect\
     // 'direction' indica la dirección y magnitud del cambio de posición.
     // 'ANGLE_STEP' es la cantidad de grados que el servo debe moverse por cada unidad de 'direction'.
     // 'MIN_ANGLE' y 'MAX_ANGLE' son los límites mínimos y máximos, respectivamente, dentro de los cuales el servomotor puede moverse.
-    
+
+
+    // Guarda la nueva pocicione en sumandole la nueva funcion del angulo 
+    int x_NuevaPocicionHorizontal += direction;
+
+
+    // Verifica que la nueva posición esté en el rango apropiado.
+    if (x_NuevaPocicionHorizontal < MIN_ANGLE || x_NuevaPocicionHorizontal > MAX_ANGLE)
+      return;
+      
+    // Actualiza la posición del servomotor.
+    m_ServoHorizontalPosicion = x_NuevaPocicionHorizontal;
+   
     
     int xPWM_Temp = map(m_ServoHorizontalPosicion + direction, 
         MIN_ANGLE, // Valor mínimo de la posición del servomotor
@@ -204,6 +224,21 @@ bool modoManualActivo = false;  // MOdo de uso LDR activado por defect\
         }
       }
 
+    }
+
+
+
+
+    /**
+     * @def VerifiarEsadoSero
+     * 
+     */
+    void VerifiarEsadoSero (boolean pVertica){
+      for (size_t i = 0; i < 180; i++)
+      {
+        moveVertical(1);
+      }
+      
     }
 
 /**
