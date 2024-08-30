@@ -119,15 +119,8 @@ bool modoManualActivo = false;  // MOdo de uso LDR activado por defect\
     // Actualiza la posición del servomotor.
     m_ServoVerticalPosicion = x_NuevaPocicionVertical;
 
-    int xPWM_Temp= map(m_ServoVerticalPosicion, 
-        MIN_ANGLE, // Valor mínimo de la posición del servomotor
-        MAX_ANGLE, // Valor máximo de la posición del servomotor
-        pwmMin, // Valor minimo del PWM
-        pwmMax); // Valor maximo del PWM
+    moverServo(m_ServoVerticalPosicion,)
 
-    // Mueve el servomotodr a la nueva posición calculada.
-    m_servoVertical.write(xPWM_Temp);
-    
     // Imprime la nueva posición del servomotor vertical en el monitor serial para depuración y monitoreo.
     Serial.print("Servo Vertical: ");
     Serial.println(m_ServoVerticalPosicion);
@@ -159,29 +152,28 @@ bool modoManualActivo = false;  // MOdo de uso LDR activado por defect\
     // Actualiza la posición del servomotor.
     m_ServoHorizontalPosicion = x_NuevaPocicionHorizontal;
    
-    
-    int xPWM_Temp = map(m_ServoHorizontalPosicion, 
-        MIN_ANGLE, // Valor mínimo de la posición del servomotor
-        MAX_ANGLE, // Valor máximo de la posición del servomotor
-        pwmMin, // Valor minimo del PWM
-        pwmMax); // Valor maximo del PWM
 
-  // Opcion 1 No funciona Bien y quiero saber la diferencia
-    //  int newHorizontalPosition = constrain(  
-    //   m_ServoHorizontalPosicion + direction , 
-    //   MIN_ANGLE, 
-    //   MAX_ANGLE); // Agregar Configuracion PWMN
-
-
-
-    // Mueve el servomotor a la nueva posición calculada.
-    m_servoHorizontal.write(xPWM_Temp);
-    
+    moverServo(m_ServoHorizontalPosicion, m_servoHorizontal)
  
     // Imprime la nueva posición del servomotor horizontal en el monitor serial para depuración y monitoreo.
     Serial.print("Servo Horizontal: ");
     Serial.println(m_ServoHorizontalPosicion);
   } // Fin de la función 'moveHorizontal'
+
+  /**
+  * 
+  **/
+  void moverServo(int p_Grados, Servo p_ServoAMover){
+    int xPWM_Temp = map(p_Grados, 
+      MIN_ANGLE, // Valor mínimo de la posición del servomotor
+      MAX_ANGLE, // Valor máximo de la posición del servomotor
+      pwmMin, // Valor minimo del PWM
+      pwmMax); // Valor maximo del PWM
+
+    // Mueve Servo
+    p_ServoAMover.write(xPWM_Temp);
+
+  }
 
  /**
   * @def controlarSerfosConLDR
